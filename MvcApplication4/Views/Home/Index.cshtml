@@ -1,0 +1,166 @@
+﻿
+
+@{
+    Layout = "_menu.cshtml";
+    var person = Model;
+    
+}
+
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+            
+        </div>
+        <div class="span9">
+            <form action="/api/ExpenseReports/addReport?userid=10" method="post">    <fieldset>
+        <legend>ExpenseReport</legend>
+
+        <div class="editor-label">
+            <label for="RelocateeID">RelocateeID</label>
+        </div>
+        <div class="editor-field">
+            <input class="text-box single-line" data-val="true" data-val-number="The field RelocateeID must be a number." id="Relocateeid" name="Relocateeid" type="number" value="" />
+            <span class="field-validation-valid" data-valmsg-for="RelocateeID" data-valmsg-replace="true"></span>
+        </div>
+
+        <div class="editor-label">
+            <label for="ClientID">ClientID</label>
+        </div>
+        <div class="editor-field">
+            <input class="text-box single-line" data-val="true" data-val-number="The field ClientID must be a number." id="ClientID" name="ClientID" type="number" value="" />
+            <span class="field-validation-valid" data-valmsg-for="ClientID" data-valmsg-replace="true"></span>
+        </div>
+
+        <div class="editor-label">
+            <label for="Name">Name</label>
+        </div>
+        <div class="editor-field">
+            <input class="text-box single-line" id="Name" name="Name" type="text" value="" />
+            <span class="field-validation-valid" data-valmsg-for="Name" data-valmsg-replace="true"></span>
+        </div>
+
+        <div class="editor-label">
+            <label for="Description">Description</label>
+        </div>
+        <div class="editor-field">
+            <input class="text-box single-line" id="Description" name="Description" type="text" value="" />
+            <span class="field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+        </div>
+
+        <div class="editor-label">
+            <label for="PeriodBeginDate">PeriodBeginDate</label>
+        </div>
+        <div class="editor-field">
+            <input class="text-box single-line" data-val="true" data-val-date="The field PeriodBeginDate must be a date." id="PeriodBeginDate" name="PeriodBeginDate" type="datetime" value="" />
+            <span class="field-validation-valid" data-valmsg-for="PeriodBeginDate" data-valmsg-replace="true"></span>
+        </div>
+
+        <div class="editor-label">
+            <label for="PeriodEndDate">PeriodEndDate</label>
+        </div>
+        <div class="editor-field">
+            <input class="text-box single-line" data-val="true" data-val-date="The field PeriodEndDate must be a date." id="PeriodEndDate" name="PeriodEndDate" type="datetime" value="" />
+            <span class="field-validation-valid" data-valmsg-for="PeriodEndDate" data-valmsg-replace="true"></span>
+        </div>
+
+        <div class="editor-label">
+            <label for="ReportDate">ReportDate</label>
+        </div>
+        <div class="editor-field">
+            <input class="text-box single-line" data-val="true" data-val-date="The field ReportDate must be a date." id="ReportDate" name="ReportDate" type="datetime" value="" />
+            <span class="field-validation-valid" data-valmsg-for="ReportDate" data-valmsg-replace="true"></span>
+        </div>
+
+        <div class="editor-label">
+            <label for="PeopleCovered">PeopleCovered</label>
+        </div>
+        <div class="editor-field">
+            <input class="text-box single-line" data-val="true" data-val-number="The field PeopleCovered must be a number." id="PeopleCovered" name="PeopleCovered" type="number" value="" />
+            <span class="field-validation-valid" data-valmsg-for="PeopleCovered" data-valmsg-replace="true"></span>
+        </div>
+
+        <div class="editor-label">
+            <label for="ReportStatusID">ReportStatusID</label>
+        </div>
+        <div class="editor-field">
+            <input class="text-box single-line" data-val="true" data-val-number="The field ReportStatusID must be a number." id="ReportStatusID" name="ReportStatusID" type="number" value="" />
+            <span class="field-validation-valid" data-valmsg-for="ReportStatusID" data-valmsg-replace="true"></span>
+        </div>
+
+        <div class="editor-label">
+            <label for="PaymentMethodID">PaymentMethodID</label>
+        </div>
+        <div class="editor-field">
+            <input class="text-box single-line" data-val="true" data-val-number="The field PaymentMethodID must be a number." id="PaymentMethodID" name="PaymentMethodID" type="number" value="" />
+            <span class="field-validation-valid" data-valmsg-for="PaymentMethodID" data-valmsg-replace="true"></span>
+        </div>
+
+        <div class="editor-label">
+            <label for="PaymentMethodVerifiedID">PaymentMethodVerifiedID</label>
+        </div>
+        <div class="editor-field">
+            <input class="text-box single-line" data-val="true" data-val-number="The field PaymentMethodVerifiedID must be a number." id="PaymentMethodVerifiedID" name="PaymentMethodVerifiedID" type="number" value="" />
+            <span class="field-validation-valid" data-valmsg-for="PaymentMethodVerifiedID" data-valmsg-replace="true"></span>
+        </div>
+
+        <div class="editor-label">
+            <label for="HowSentID">HowSentID</label>
+        </div>
+        <div class="editor-field">
+            <input class="text-box single-line" data-val="true" data-val-number="The field HowSentID must be a number." id="HowSentID" name="HowSentID" type="number" value="" />
+            <span class="field-validation-valid" data-valmsg-for="HowSentID" data-valmsg-replace="true"></span>
+        </div>
+
+        <div class="editor-label">
+            <label for="RejectReason">RejectReason</label>
+        </div>
+        <div class="editor-field">
+            <input class="text-box single-line" id="RejectReason" name="RejectReason" type="text" value="" />
+            <span class="field-validation-valid" data-valmsg-for="RejectReason" data-valmsg-replace="true"></span>
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+</form>
+
+        </div>
+        
+    </div>
+    
+</div>
+
+ <form name="form1" method="post" enctype="multipart/form-data" action="api/ExpenseReports/addReceiptNoteAndImage">
+            <fieldset>
+                <legend>File Upload Example</legend>
+            <div>
+                <label for="userId">userId</label>
+                <input name="userId" type="text" />
+            </div>
+                <div>
+                <label for="reportId">reportId</label>
+                <input name="reportId" type="text" />
+            </div>
+                <div>
+                <label for="detailId">detailId</label>
+                <input name="detailId" type="text" />
+            </div>
+                 <div>
+                <label for="note">note</label>
+                <input name="note" type="text" />
+            </div>
+            <div>
+                <label for="image1">Image File</label>
+                <input name="image1" type="file" />
+            </div>
+            <div>
+                <input type="submit" value="Submit" />
+            </div>
+                </fieldset>
+        </form>
+
+
+
+
