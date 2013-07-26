@@ -51,7 +51,7 @@ namespace MvcApplication4.Controllers
         [HttpGet]
         public ReturnStatus details(int reportId)
         {
-            return new ReturnStatus { status = true, result = db.ExpenseReportDetail.Where((detail) => detail.ExpenseReportID == reportId).ToList() };
+            return new ReturnStatus { status = true, result = db.ExpenseReportDetail.Where((detail) => detail.ExpenseReportID == reportId).OrderByDescending(detail=>detail.EnteredDate).ToList() };
         }
         [HttpGet]
         public ReturnStatus receipts(int reportId,int detailId=0)
@@ -59,7 +59,7 @@ namespace MvcApplication4.Controllers
             string rootUrl = Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.AbsolutePath+Request.RequestUri.Query, string.Empty);
             var list = db.ExpenseReportReceipts.Where((detail) => detail.ExpenseReportID == reportId && (detailId == 0 ? 1 == 1 : detail.ExpenseReportDetailID == detailId)).ToList();
             list.ForEach(item => {
-                item.FileName = item.FileName != null ? rootUrl +upload_folder+ item.FileName : item.FileName;
+                item.FileName = !String.IsNullOrEmpty(item.FileName) ? rootUrl +upload_folder+ item.FileName : item.FileName;
             });
             return new ReturnStatus { status = true, result =list };
         }
@@ -258,6 +258,7 @@ namespace MvcApplication4.Controllers
             {
                 return new ReturnStatus { status = false, message = "Cannot find detail record" };
             }
+            db.Database.ExecuteSqlCommand("Delete from ExpenseReportReceipts where ExpenseReportID={0} and ExpenseReportDetailID={1}", detail.ExpenseReportID,detailId);
             db.ExpenseReportDetail.Remove(detail);
             db.SaveChanges();
             return new ReturnStatus { status = true };
@@ -265,20 +266,46 @@ namespace MvcApplication4.Controllers
 
 
         [HttpGet]
-        public ReturnStatus addReceiptNote(int userid, int reportId, int detailId, String note)
+        public ReturnStatus addReceiptNote(int userid, int reportId, int detailId, String note,int receiptId=0,int imageEdit=0)
         {
-            ExpenseReportReceipts receipt = new ExpenseReportReceipts();
-            receipt.ExpenseReportID = reportId;
-            receipt.ExpenseReportDetailID = detailId;
-            receipt.Notes = note;
-            receipt.EnteredUser = userid;
-            receipt.EnteredDate = DateTime.Now;
-            receipt.UpdateDate = DateTime.Now;
-            receipt.UpdateUser = userid;
-            receipt.UpdateSeqNo = 1;
-            db.ExpenseReportReceipts.Add(receipt);
-            db.SaveChanges();
-            return new ReturnStatus { status = true, result = receipt };
+            if (receiptId==0)
+            {
+
+                ExpenseReportReceipts receipt = new ExpenseReportReceipts();
+                receipt.ExpenseReportID = reportId;
+                receipt.ExpenseReportDetailID = detailId;
+                receipt.Notes = note;
+                receipt.EnteredUser = userid;
+                receipt.EnteredDate = DateTime.Now;
+                receipt.UpdateDate = DateTime.Now;
+                receipt.UpdateUser = userid;
+                receipt.UpdateSeqNo = 1;
+                db.ExpenseReportReceipts.Add(receipt);
+                db.SaveChanges();
+                return new ReturnStatus { status = true, result = receipt };
+            }
+            else
+            {
+                ExpenseReportReceipts receipt = db.ExpenseReportReceipts.Find(receiptId);
+                if (receipt == null)
+                {
+                    return new ReturnStatus { status = false, message="Can not find this receipt" };
+                }
+                else
+                {
+                    receipt.Notes = note;
+                    receipt.UpdateDate = DateTime.Now;
+                    receipt.UpdateUser = userid;
+                    receipt.UpdateSeqNo = receipt.UpdateSeqNo+ 1;
+                    if (imageEdit == 1)
+                    {
+                        receipt.FileName = "";
+                    }
+                    db.SaveChanges();
+                    return new ReturnStatus { status = true, result = receipt };
+                }
+            }
+            
         }
 
         [HttpGet]
@@ -304,27 +331,52 @@ namespace MvcApplication4.Controllers
               
                 // Read the form data and return an async task.
                 await Request.Content.ReadAsMultipartAsync(provider);
-
-                ExpenseReportReceipts receipt = new ExpenseReportReceipts();
-                receipt.ExpenseReportID = int.Parse(provider.FormData["reportId"]);
-                receipt.ExpenseReportDetailID = int.Parse(provider.FormData["detailId"]); ;
-                receipt.Notes = provider.FormData["note"];
-                receipt.EnteredUser = int.Parse(provider.FormData["userId"]);
-                receipt.EnteredDate = DateTime.Now;
-                receipt.UpdateDate = DateTime.Now;
-                receipt.UpdateUser = int.Parse(provider.FormData["userId"]); 
-                receipt.UpdateSeqNo = 1;
-                
-                foreach (var file in provider.FileData)
+                int receiptId = int.Parse(provider.FormData["receiptId"]);
+                if (receiptId == 0)
                 {
-                    FileInfo fileInfo = new FileInfo(file.LocalFileName);
-                    receipt.FileName = fileInfo.Name;
-                }
-                
-                db.ExpenseReportReceipts.Add(receipt);
-                db.SaveChanges();
 
-                return new ReturnStatus { status = true, result = receipt };
+                    ExpenseReportReceipts receipt = new ExpenseReportReceipts();
+                    receipt.ExpenseReportID = int.Parse(provider.FormData["reportId"]);
+                    receipt.ExpenseReportDetailID = int.Parse(provider.FormData["detailId"]); ;
+                    receipt.Notes = provider.FormData["note"];
+                    receipt.EnteredUser = int.Parse(provider.FormData["userId"]);
+                    receipt.EnteredDate = DateTime.Now;
+                    receipt.UpdateDate = DateTime.Now;
+                    receipt.UpdateUser = int.Parse(provider.FormData["userId"]);
+                    receipt.UpdateSeqNo = 1;
+
+                    foreach (var file in provider.FileData)
+                    {
+                        FileInfo fileInfo = new FileInfo(file.LocalFileName);
+                        receipt.FileName = fileInfo.Name;
+                    }
+
+                    db.ExpenseReportReceipts.Add(receipt);
+                    db.SaveChanges();
+
+                    return new ReturnStatus { status = true, result = receipt };
+                }
+                else
+                {
+                    ExpenseReportReceipts receipt = db.ExpenseReportReceipts.Find(receiptId);
+                    if (receipt == null)
+                    {
+                        return new ReturnStatus { status = false, message = "Can not find this receipt" };
+                    }
+                    else {
+                        foreach (var file in provider.FileData)
+                        {
+                            FileInfo fileInfo = new FileInfo(file.LocalFileName);
+                            receipt.FileName = fileInfo.Name;
+                        }
+                        receipt.Notes = provider.FormData["note"];
+                        receipt.UpdateDate = DateTime.Now;
+                        receipt.UpdateUser = int.Parse(provider.FormData["userId"]);
+                        receipt.UpdateSeqNo = 1+ receipt.UpdateSeqNo;
+                        db.SaveChanges();
+                        return new ReturnStatus { status = true, result = receipt };
+                    }
+                }
               
 
             }
@@ -345,6 +397,14 @@ namespace MvcApplication4.Controllers
             db.SaveChanges();
             return new ReturnStatus { status = true };
         }
+
+        [HttpGet]
+        public ReturnStatus test()
+        {
+            
+            return new ReturnStatus { message = DateTime.Now.ToString("yyyyMMddhhmmss") };
+        }
+
         
     }
     public class CustomMultipartFormDataStreamProvider : MultipartFormDataStreamProvider
@@ -353,7 +413,7 @@ namespace MvcApplication4.Controllers
         public override string GetLocalFileName(System.Net.Http.Headers.HttpContentHeaders headers)
         {
             var name = !string.IsNullOrWhiteSpace(headers.ContentDisposition.FileName) ? headers.ContentDisposition.FileName : "NoName";
-            return name.Replace("\"", string.Empty);
+            return  DateTime.Now.ToString("yyyyMMddhhmmss")+name.Replace("\"", string.Empty);
         }
     }
 
