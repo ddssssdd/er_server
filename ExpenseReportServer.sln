@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcApplication4", "MvcApplication4\MvcApplication4.csproj", "{404DC9D3-E5F1-4A3A-8D92-4BAC7A17FC28}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseReportServer", "MvcApplication4\ExpenseReportServer.csproj", "{404DC9D3-E5F1-4A3A-8D92-4BAC7A17FC28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

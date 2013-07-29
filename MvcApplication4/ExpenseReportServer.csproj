@@ -134,7 +134,6 @@
     <Compile Include="Controllers\ERController.cs" />
     <Compile Include="Controllers\ExpenseReportsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Expense\ExpenseDB.cs" />
     <Compile Include="Expense\Massive.cs" />
@@ -142,9 +141,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\GuestRespone.cs" />
     <Compile Include="Models\LocalDatabase.cs" />
-    <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Push.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
