@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace MvcApplication4
+namespace ExpenseReportServer
 {
     public class BundleConfig
     {

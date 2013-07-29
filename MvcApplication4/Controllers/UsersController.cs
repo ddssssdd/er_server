@@ -4,10 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using MvcApplication4.Expense;
-using MvcApplication4.Models;
+using ExpenseReportServer.Expense;
+using ExpenseReportServer.Models;
 
-namespace MvcApplication4.Controllers
+namespace ExpenseReportServer.Controllers
 {
     public class UsersController : ApiController
     {

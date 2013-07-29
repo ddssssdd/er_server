@@ -5,9 +5,9 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using MvcApplication4.Expense;
+using ExpenseReportServer.Expense;
 
-namespace MvcApplication4.Controllers
+namespace ExpenseReportServer.Controllers
 {
     public class ERController : Controller
     {

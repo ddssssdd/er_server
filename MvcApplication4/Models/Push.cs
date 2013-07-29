@@ -6,7 +6,7 @@ using PushSharp;
 using PushSharp.Apple;
 using System.IO;
 
-namespace MvcApplication4.Models
+namespace ExpenseReportServer.Models
 {
     public static  class Push
     {

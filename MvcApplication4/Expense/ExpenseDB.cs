@@ -6,7 +6,7 @@ using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MvcApplication4.Expense
+namespace ExpenseReportServer.Expense
 {
     public class ExpenseDB : DbContext
     {

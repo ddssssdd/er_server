@@ -6,9 +6,9 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Threading.Tasks;
 using System.IO;
-using MvcApplication4.Expense;
-using MvcApplication4.Models;
-namespace MvcApplication4.Controllers
+using ExpenseReportServer.Expense;
+using ExpenseReportServer.Models;
+namespace ExpenseReportServer.Controllers
 {
     public class ExpenseReportsController : ApiController
     {

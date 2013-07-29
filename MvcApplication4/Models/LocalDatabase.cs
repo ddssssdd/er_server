@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace MvcApplication4.Models
+namespace ExpenseReportServer.Models
 {
     public class LocalDatabase :DbContext
     {

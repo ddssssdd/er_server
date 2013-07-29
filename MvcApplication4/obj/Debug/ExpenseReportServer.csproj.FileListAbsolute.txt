@@ -1,5 +1,3 @@
-C:\Users\fu\documents\visual studio 2012\Projects\MvcApplication4\MvcApplication4\bin\MvcApplication4.dll
-C:\Users\fu\documents\visual studio 2012\Projects\MvcApplication4\MvcApplication4\bin\MvcApplication4.pdb
 C:\Users\fu\documents\visual studio 2012\Projects\MvcApplication4\MvcApplication4\bin\Antlr3.Runtime.dll
 C:\Users\fu\documents\visual studio 2012\Projects\MvcApplication4\MvcApplication4\bin\EntityFramework.dll
 C:\Users\fu\documents\visual studio 2012\Projects\MvcApplication4\MvcApplication4\bin\Microsoft.Web.Infrastructure.dll
@@ -28,5 +26,7 @@ C:\Users\fu\documents\visual studio 2012\Projects\MvcApplication4\MvcApplication
 C:\Users\fu\documents\visual studio 2012\Projects\MvcApplication4\MvcApplication4\bin\System.Web.WebPages.Deployment.xml
 C:\Users\fu\documents\visual studio 2012\Projects\MvcApplication4\MvcApplication4\bin\System.Web.WebPages.Razor.xml
 C:\Users\fu\documents\visual studio 2012\Projects\MvcApplication4\MvcApplication4\obj\Debug\ExpenseReportServer.csprojResolveAssemblyReference.cache
-C:\Users\fu\documents\visual studio 2012\Projects\MvcApplication4\MvcApplication4\obj\Debug\MvcApplication4.dll
-C:\Users\fu\documents\visual studio 2012\Projects\MvcApplication4\MvcApplication4\obj\Debug\MvcApplication4.pdb
+C:\Users\fu\Documents\Visual Studio 2012\Projects\MvcApplication4\MvcApplication4\bin\ExpenseReportServer.dll
+C:\Users\fu\Documents\Visual Studio 2012\Projects\MvcApplication4\MvcApplication4\bin\ExpenseReportServer.pdb
+C:\Users\fu\Documents\Visual Studio 2012\Projects\MvcApplication4\MvcApplication4\obj\Debug\ExpenseReportServer.dll
+C:\Users\fu\Documents\Visual Studio 2012\Projects\MvcApplication4\MvcApplication4\obj\Debug\ExpenseReportServer.pdb

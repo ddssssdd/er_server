@@ -10,7 +10,7 @@ using System.Data;
 using System.Collections.Specialized;
 using System.Text;
 
-namespace MvcApplication4.Expense
+namespace ExpenseReportServer.Expense
 {
     public static class ObjectExtensions
     {

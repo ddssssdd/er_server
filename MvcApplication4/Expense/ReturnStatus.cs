@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace MvcApplication4.Expense
+namespace ExpenseReportServer.Expense
 {
     public class ReturnStatus
     {
