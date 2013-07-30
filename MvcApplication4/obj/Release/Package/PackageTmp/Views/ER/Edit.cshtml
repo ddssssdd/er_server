@@ -1,0 +1,133 @@
+﻿@model MvcApplication4.Expense.ExpenseReport
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>ExpenseReport</legend>
+
+        @Html.HiddenFor(model => model.ExpenseReportID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RelocateeID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RelocateeID)
+            @Html.ValidationMessageFor(model => model.RelocateeID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ClientID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ClientID)
+            @Html.ValidationMessageFor(model => model.ClientID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PeriodBeginDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PeriodBeginDate)
+            @Html.ValidationMessageFor(model => model.PeriodBeginDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PeriodEndDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PeriodEndDate)
+            @Html.ValidationMessageFor(model => model.PeriodEndDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ReportDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ReportDate)
+            @Html.ValidationMessageFor(model => model.ReportDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PeopleCovered)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PeopleCovered)
+            @Html.ValidationMessageFor(model => model.PeopleCovered)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ReportStatusID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ReportStatusID)
+            @Html.ValidationMessageFor(model => model.ReportStatusID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PaymentMethodID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PaymentMethodID)
+            @Html.ValidationMessageFor(model => model.PaymentMethodID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PaymentMethodVerifiedID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PaymentMethodVerifiedID)
+            @Html.ValidationMessageFor(model => model.PaymentMethodVerifiedID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.HowSentID)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.HowSentID)
+            @Html.ValidationMessageFor(model => model.HowSentID)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RejectReason)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RejectReason)
+            @Html.ValidationMessageFor(model => model.RejectReason)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

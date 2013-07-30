@@ -27,6 +27,6 @@ C:\Users\fu\Documents\Visual Studio 2012\Projects\MvcApplication4\MvcApplication
 C:\Users\fu\Documents\Visual Studio 2012\Projects\MvcApplication4\MvcApplication4\bin\System.Web.WebPages.xml
 C:\Users\fu\Documents\Visual Studio 2012\Projects\MvcApplication4\MvcApplication4\bin\System.Web.WebPages.Deployment.xml
 C:\Users\fu\Documents\Visual Studio 2012\Projects\MvcApplication4\MvcApplication4\bin\System.Web.WebPages.Razor.xml
-C:\Users\fu\Documents\Visual Studio 2012\Projects\MvcApplication4\MvcApplication4\obj\Debug\ExpenseReportServer.csprojResolveAssemblyReference.cache
-C:\Users\fu\Documents\Visual Studio 2012\Projects\MvcApplication4\MvcApplication4\obj\Debug\ExpenseReportServer.dll
-C:\Users\fu\Documents\Visual Studio 2012\Projects\MvcApplication4\MvcApplication4\obj\Debug\ExpenseReportServer.pdb
+C:\Users\fu\Documents\Visual Studio 2012\Projects\MvcApplication4\MvcApplication4\obj\Release\ExpenseReportServer.csprojResolveAssemblyReference.cache
+C:\Users\fu\Documents\Visual Studio 2012\Projects\MvcApplication4\MvcApplication4\obj\Release\ExpenseReportServer.dll
+C:\Users\fu\Documents\Visual Studio 2012\Projects\MvcApplication4\MvcApplication4\obj\Release\ExpenseReportServer.pdb

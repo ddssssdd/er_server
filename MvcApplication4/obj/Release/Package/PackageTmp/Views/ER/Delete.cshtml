@@ -1,0 +1,109 @@
+﻿@model MvcApplication4.Expense.ExpenseReport
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>ExpenseReport</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RelocateeID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RelocateeID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ClientID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ClientID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Description)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Description)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.PeriodBeginDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PeriodBeginDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.PeriodEndDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PeriodEndDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ReportDate)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ReportDate)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.PeopleCovered)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PeopleCovered)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ReportStatusID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ReportStatusID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.PaymentMethodID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PaymentMethodID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.PaymentMethodVerifiedID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.PaymentMethodVerifiedID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.HowSentID)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.HowSentID)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.RejectReason)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.RejectReason)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

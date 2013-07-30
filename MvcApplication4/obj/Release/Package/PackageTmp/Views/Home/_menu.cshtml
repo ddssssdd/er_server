@@ -1,0 +1,13 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section menu{
+    <li class="active">@Html.ActionLink("Home","Index")</li>
+    <li>@Html.ActionLink("Contact","Contact")</li>
+    <li>@Html.ActionLink("About","About")</li>
+    
+    
+}
+
+@RenderBody();
