@@ -138,10 +138,33 @@
     <Compile Include="Controllers\ERController.cs" />
     <Compile Include="Controllers\ExpenseReportsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RelocateeController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Expense\Address.cs" />
+    <Compile Include="Expense\Client.cs" />
+    <Compile Include="Expense\CompanyMoveMileage.cs" />
+    <Compile Include="Expense\Email.cs" />
+    <Compile Include="Expense\ERExpensePurpose.cs" />
+    <Compile Include="Expense\ERExpenseService.cs" />
+    <Compile Include="Expense\ERExpenseTmp.cs" />
+    <Compile Include="Expense\ERReportStatus.cs" />
+    <Compile Include="Expense\Expense.cs" />
+    <Compile Include="Expense\ExpenseCode.cs" />
     <Compile Include="Expense\ExpenseDB.cs" />
+    <Compile Include="Expense\ExpenseReport.cs" />
+    <Compile Include="Expense\ExpenseReportDetail.cs" />
+    <Compile Include="Expense\ExpenseReportReceipts.cs" />
+    <Compile Include="Expense\ExpenseView.cs" />
     <Compile Include="Expense\Massive.cs" />
+    <Compile Include="Expense\Message.cs" />
+    <Compile Include="Expense\PayeeBankRouting.cs" />
+    <Compile Include="Expense\Person.cs" />
+    <Compile Include="Expense\Phone.cs" />
+    <Compile Include="Expense\Relocatee.cs" />
     <Compile Include="Expense\ReturnStatus.cs" />
+    <Compile Include="Expense\Service.cs" />
+    <Compile Include="Expense\Users.cs" />
+    <Compile Include="Expense\WiVendor.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -272,6 +295,7 @@
     <Content Include="Views\Home\Guest.cshtml" />
     <Content Include="Views\Home\RsvpForm.cshtml" />
     <Content Include="Views\Home\Thanks.cshtml" />
+    <Content Include="Views\Home\contact.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\upload\" />

@@ -132,6 +132,26 @@
     
 </div>
 
+<div>
+       <a  href="#" onclick="openWindow(); return false;">Click me</a>
+
+</div>
+<div id="target">
+
+
+</div>
+<script>
+    function openWindow() {
+        
+        window.aaabb = function () {
+            $("<h1>Hello</h1>").appendTo("#target");
+            alert("changed");
+        }
+        window.open("@Url.Action("contact")");
+        return false;
+    }
+
+</script>
 
 
 

@@ -16,7 +16,7 @@ namespace ExpenseReportServer.Controllers
         }
         public ViewResult Contact()
         {
-            return View("Index");
+            return View();
         }
         public ViewResult About()
         {

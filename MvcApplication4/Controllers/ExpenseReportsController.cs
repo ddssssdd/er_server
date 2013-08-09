@@ -12,7 +12,9 @@ namespace ExpenseReportServer.Controllers
 {
     public class ExpenseReportsController : ApiController
     {
+        private const string upload_to_folder = @"D:\SC\Web\SC6-UploadedFile\SC6QA\om\ERReceipt\";
         private const string upload_folder = "/Content/upload/";
+        private const string reference_url = @"http://apps.synvata.com:8087/MC6Dev/UploadedFile/om/ERReceipt/";
         private ExpenseDB db = new ExpenseDB();
         [HttpGet]
         public ReturnStatus reports(int relocateeId)
@@ -59,7 +61,8 @@ namespace ExpenseReportServer.Controllers
             string rootUrl = Request.RequestUri.AbsoluteUri.Replace(Request.RequestUri.AbsolutePath+Request.RequestUri.Query, string.Empty);
             var list = db.ExpenseReportReceipts.Where((detail) => detail.ExpenseReportID == reportId && (detailId == 0 ? 1 == 1 : detail.ExpenseReportDetailID == detailId)).ToList();
             list.ForEach(item => {
-                item.FileName = !String.IsNullOrEmpty(item.FileName) ? rootUrl +upload_folder+ item.FileName : item.FileName;
+                //item.FileName = !String.IsNullOrEmpty(item.FileName) ? rootUrl +upload_folder+ item.FileName : item.FileName;
+                item.FileName = !String.IsNullOrEmpty(item.FileName) ? reference_url + item.FileName : "";
             });
             return new ReturnStatus { status = true, result =list };
         }
@@ -309,10 +312,42 @@ namespace ExpenseReportServer.Controllers
         }
 
         [HttpGet]
-        public ReturnStatus changeReportStatus()
+        public ReturnStatus changeReportStatus(int reportId)
         {
+            ExpenseReport er = db.ExpenseReports.Find(reportId);
+            if (er != null)
+            {
+                ERReportStatus status = db.ReportStatus.Find(er.ReportStatusID);
+                String statusString = status != null ? status.Description : "Unknown";
+                int count = 0;
+                List<String> results = new List<String>();
+                using (var localdb = new LocalDatabase())
+                {
+                    var list = localdb.UserDevices.Where(device =>
+                               device.relocateeId == er.RelocateeID).ToList();
+                    list.ForEach(device =>
+                    {
+                        if (!String.IsNullOrEmpty(device.token))
+                        {
+                            String message = String.Format("Your expense report [{0}] has been [{1}]!", er.Name,statusString);
+                            Push.pushNotifcationToApple(device.token, message,1);
+                            count++;
+                            results.Add(message);
+                        }
+                    });
+
+                    
+                }
+                return new ReturnStatus { status = true, message = String.Format("Send {0} notification(s)", count) ,result=results};
+            }
+            else
+            {
+                return new ReturnStatus { status = false, message = "Can not find this reportId" };
+            }
+            /*
             Push.pushNotifcationToApple("0c90770b7f56a3f8304784dc0520bcb8d212bccda9a0b579d9664d6b4d17cdbf", "Your expense report [name] has been [status]!", 1);
             return new ReturnStatus { status = true, result = null, message = "done" };
+             */
         }
         public async Task<ReturnStatus> addReceiptNoteAndImage()
         {
@@ -322,8 +357,8 @@ namespace ExpenseReportServer.Controllers
                 throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
             }
 
-            string root = System.Web.HttpContext.Current.Server.MapPath("~"+upload_folder);
-            
+            //string root = System.Web.HttpContext.Current.Server.MapPath("~"+upload_folder);
+            string root = upload_to_folder;
             var provider = new CustomMultipartFormDataStreamProvider(root);
 
             try
@@ -398,12 +433,7 @@ namespace ExpenseReportServer.Controllers
             return new ReturnStatus { status = true };
         }
 
-        [HttpGet]
-        public ReturnStatus test()
-        {
-            
-            return new ReturnStatus { message = DateTime.Now.ToString("yyyyMMddhhmmss") };
-        }
+        
 
         
     }
