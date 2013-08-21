@@ -9,9 +9,9 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    
+    <style>
       body {
-        padding-top: 100px;
+        padding-top: 120px;
         padding-bottom: 40px;
       }
       .sidebar-nav {
@@ -26,7 +26,7 @@
           padding-right: 5px;
         }
       }
-    
+    </style>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -40,7 +40,8 @@
           <a class="brand" href="#">Expense Reports</a>
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">
-              Logged in as <a href="#" class="navbar-link">administrator</a>
+              Logged in as <a href=" @Url.Action("Logout","Account")" class="navbar-link">@System.Threading.Thread.CurrentPrincipal.Identity.Name</a>
+               
             </p>
             <ul class="nav">
               @RenderSection("menu",required:false)

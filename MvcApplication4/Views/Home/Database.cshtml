@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Database";
+    Layout = "~/Views/Home/_menu.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3 bs-docs-sidebar">
+            <ul class="nav nav-list bs-docs-sidenav">
+
+                @foreach (String table in ViewBag.list)
+                {
+                    <li><a href="#" onclick="getTable('@table'); return false;">@table<i class="icon-chevron-right"></i></a></li>
+                }
+            </ul>
+        </div>
+        <div class="span9">
+            <div class="input-append">
+                <input class="input-xxlarge" type="text" id="input_sql" />
+                <button class="btn btn-primary" type="button" onclick="doSql();">Execute</button>
+            </div>
+            
+        </div>
+
+    </div>
+
+</div>

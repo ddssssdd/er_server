@@ -5,6 +5,7 @@ using System.Web;
 using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
 
 namespace ExpenseReportServer.Expense
 {
@@ -35,6 +36,11 @@ namespace ExpenseReportServer.Expense
 
         public DbSet<EmailType> EmailTypes { get; set; }
         public DbSet<PhoneType> PhoneTypes { get; set; }
+        public DataTable tables()
+        {
+            this.Database.Connection.Open();
+            return this.Database.Connection.GetSchema("Tables");
+        }
     }
 
 }

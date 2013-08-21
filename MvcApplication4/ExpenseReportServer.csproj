@@ -135,6 +135,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DbController.cs" />
     <Compile Include="Controllers\ERController.cs" />
     <Compile Include="Controllers\ExpenseReportsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -168,9 +170,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\DbHelper.cs" />
+    <Compile Include="Helpers\Expando.cs" />
+    <Compile Include="Helpers\PropertyBag.cs" />
     <Compile Include="Models\LocalDatabase.cs" />
     <Compile Include="Models\Push.cs" />
+    <Compile Include="Models\UserDevices.cs" />
+    <Compile Include="Models\LoginUsers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\ExpenseMembershipProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\er.sdf" />
@@ -295,7 +303,9 @@
     <Content Include="Views\Home\Guest.cshtml" />
     <Content Include="Views\Home\RsvpForm.cshtml" />
     <Content Include="Views\Home\Thanks.cshtml" />
-    <Content Include="Views\Home\contact.cshtml" />
+    <Content Include="Views\Home\apis.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Home\Database.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\upload\" />
