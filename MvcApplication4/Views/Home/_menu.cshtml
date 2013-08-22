@@ -1,13 +1,88 @@
-﻿
-@{
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section menu{
-    <li class="active">@Html.ActionLink("Home","Index")</li>
-    <li>@Html.ActionLink("APIs","Apis")</li>
-    <li>@Html.ActionLink("Database","Database")</li>
-    
-    
+    <li class="active">@Html.ActionLink("Home", "Index")</li>
+    <li>@Html.ActionLink("APIs", "Apis")</li>
+    <li class="dropdown">
+        <a class="dropdown-toggle"
+            data-toggle="dropdown"
+            href="#">DataBase
+        <b class="caret"></b>
+        </a>
+        <ul class="dropdown-menu">
+            @Html.Action("ConnList")
+            <hr />
+            <li><a href="#addModal" role="button"  data-toggle="modal">Add New Connection</a></li>
+
+        </ul>
+    </li>
+
+
 }
 
 @RenderBody();
+
+
+<div id="addModal" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Add New Connection</h3>
+
+
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" action="save" method="post">
+            <div class="control-group">
+                <label class="control-label" for="Name">Name</label>
+                <div class="controls">
+                    <input type="text" name="Name" placeholder="Name">
+                </div>
+            </div>
+            <hr />
+            <div class="control-group">
+                <label class="control-label" for="Host">Host</label>
+                <div class="controls">
+                    <input type="text" name="Host" placeholder="Host">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Username">Username</label>
+                <div class="controls">
+                    <input type="text" name="Username" placeholder="Username">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Password">Password</label>
+                <div class="controls">
+                    <input type="password" name="Password" placeholder="Password">
+                </div>
+            </div>
+             <div class="control-group">
+                <label class="control-label" for="Database">Database</label>
+                <div class="controls">
+                    <input type="text" name="Database" placeholder="Database">
+                </div>
+            </div>
+            <hr />
+            <div class="control-group">
+                <label class="control-label" for="ConnectionString">ConnectionString</label>
+                <div class="controls">
+                    <input type="text" class="input-large" name="ConnectionString" placeholder="ConnectionString">
+                </div>
+                
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    
+                    <button type="submit" class="btn">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+        
+    </div>
+
+</div>

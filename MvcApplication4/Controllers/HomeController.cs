@@ -38,9 +38,27 @@ namespace ExpenseReportServer.Controllers
             FormsAuthentication.SignOut();
             return View("Index");
         }
-        public ViewResult Database()
+        public ActionResult Database(int id)
         {
-            ViewBag.list = localDb.Connections.ToList();
+            Connection cnn = localDb.Connections.Find(id);
+            if (cnn == null)
+            {
+                return HttpNotFound("Not found this Connection");
+            }
+            
+            return View(cnn);
+        }
+        [HttpPost]
+        public ActionResult Save(Connection conn)
+        {
+            localDb.Connections.Add(conn);
+            localDb.SaveChanges();
+
+            return RedirectToAction("Database");
+        }
+        public ViewResult ConnList()
+        {
+            ViewBag.cnnlist = localDb.Connections.ToList();
             return View();
         }
     }

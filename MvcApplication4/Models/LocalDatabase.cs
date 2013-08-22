@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Data.Entity;
@@ -17,10 +18,12 @@ namespace ExpenseReportServer.Models
     [Table("Connection")]
     public class Connection
     {
+        [Key]
+        public int id { get; set; }
         public String ConnectionString { get; set; }
         public String Database { get; set; }
         public String Host { get; set; }
-        public int? id { get; set; }
+        
         public String Name { get; set; }
         public String Password { get; set; }
         public int? UserId { get; set; }

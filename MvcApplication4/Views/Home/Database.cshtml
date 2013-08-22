@@ -1,28 +1,102 @@
-﻿
+﻿@model ExpenseReportServer.Models.Connection
 @{
     ViewBag.Title = "Database";
     Layout = "~/Views/Home/_menu.cshtml";
+    
 }
 
 <div class="container-fluid">
+    <h3>Conn: @Model.Name</h3>
     <div class="row-fluid">
+         
         <div class="span3 bs-docs-sidebar">
+           
             <ul class="nav nav-list bs-docs-sidenav">
-
-                @foreach (String table in ViewBag.list)
-                {
-                    <li><a href="#" onclick="getTable('@table'); return false;">@table<i class="icon-chevron-right"></i></a></li>
-                }
+                <li><a href="#" onclick=" return false;">Tables<i class="icon-chevron-right"></i></a></li>
+                <li><a href="#" onclick=" return false;">Views<i class="icon-chevron-right"></i></a></li>
+                <li><a href="#" onclick=" return false;">StoredProcedures<i class="icon-chevron-right"></i></a></li>
+                <li><a href="#" onclick=" return false;">Functions<i class="icon-chevron-right"></i></a></li>
+                <li><a href="#" onclick=" return false;">Triggers<i class="icon-chevron-right"></i></a></li>
             </ul>
+            
         </div>
         <div class="span9">
             <div class="input-append">
                 <input class="input-xxlarge" type="text" id="input_sql" />
-                <button class="btn btn-primary" type="button" onclick="doSql();">Execute</button>
+                <button class="btn btn-primary" type="button" onclick="doSql();">Search</button>
             </div>
-            
+
         </div>
 
     </div>
 
 </div>
+<div id="addModal" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Add New Connection</h3>
+
+
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" action="save" method="post">
+            <div class="control-group">
+                <label class="control-label" for="Name">Name</label>
+                <div class="controls">
+                    <input type="text" name="Name" placeholder="Name">
+                </div>
+            </div>
+            <hr />
+            <div class="control-group">
+                <label class="control-label" for="Host">Host</label>
+                <div class="controls">
+                    <input type="text" name="Host" placeholder="Host">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Username">Username</label>
+                <div class="controls">
+                    <input type="text" name="Username" placeholder="Username">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="Password">Password</label>
+                <div class="controls">
+                    <input type="password" name="Password" placeholder="Password">
+                </div>
+            </div>
+             <div class="control-group">
+                <label class="control-label" for="Database">Database</label>
+                <div class="controls">
+                    <input type="text" name="Database" placeholder="Database">
+                </div>
+            </div>
+            <hr />
+            <div class="control-group">
+                <label class="control-label" for="ConnectionString">ConnectionString</label>
+                <div class="controls">
+                    <input type="text" class="input-large" name="ConnectionString" placeholder="ConnectionString">
+                </div>
+                
+            </div>
+            <div class="control-group">
+                <div class="controls">
+                    
+                    <button type="submit" class="btn">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
+        
+    </div>
+
+</div>
+<script>
+    function getConnection( id)
+    {
+        alert(id);
+    }
+
+</script>
