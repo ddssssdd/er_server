@@ -1,0 +1,7 @@
+﻿@{
+    Layout = null;
+}
+
+@foreach (ExpenseReportServer.Models.Connection cnn in ViewBag.cnnList){
+    <li><a href="/Home/Database/@cnn.id" >@cnn.Name</a></li>            
+}

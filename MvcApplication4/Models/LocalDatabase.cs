@@ -14,6 +14,8 @@ namespace ExpenseReportServer.Models
         public DbSet<UserDevices> UserDevices { get; set; }
         public DbSet<LoginUsers> Users { get; set; }
         public DbSet<Connection> Connections { get; set; }
+        public DbSet<Section> Sections { get; set; }
+        public DbSet<CellData> CellDatas { get; set; }
     }
     [Table("Connection")]
     public class Connection

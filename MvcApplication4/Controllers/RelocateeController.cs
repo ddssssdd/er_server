@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using ExpenseReportServer.Expense;
+using ExpenseReportServer.Models;
 
 namespace ExpenseReportServer.Controllers
 {
@@ -15,10 +16,13 @@ namespace ExpenseReportServer.Controllers
         public ReturnStatus index(int id)
         {
             Relocatee relocatee = db.Relocatees.Find(id);
+            
+            DisplayFactory<Relocatee> factory = new DisplayFactory<Relocatee>(relocatee);
+
             return new ReturnStatus
             {
                 status = relocatee != null ? true : false,
-                result = relocatee
+                result = factory.sections
             };
         }
         [HttpGet]
@@ -112,6 +116,11 @@ namespace ExpenseReportServer.Controllers
             {
                 return new ReturnStatus { status = false };
             }
+        }
+        [HttpGet]
+        public ReturnStatus services(int id)
+        {
+            return new ReturnStatus { status = true, result = new RelocateeService().items(db, id) };
         }
     }
 }

@@ -10,5 +10,7 @@ namespace ExpenseReportServer.Expense
         public Boolean status;
         public String message;
         public Object result;
+        
     }
+    
 }

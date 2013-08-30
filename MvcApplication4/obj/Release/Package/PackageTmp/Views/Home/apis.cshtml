@@ -1,0 +1,102 @@
+﻿@{
+    Layout = "_menu.cshtml";
+    
+    
+}
+
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3 bs-docs-sidebar">
+            <ul class="nav nav-list bs-docs-sidenav">
+
+                @foreach (String table in ViewBag.list)
+                {
+                    <li><a href="#" onclick="getTable('@table'); return false;">@table<i class="icon-chevron-right"></i></a></li>
+                }
+            </ul>
+        </div>
+        <div class="span9">
+            <div class="input-append">
+                <input class="input-xxlarge" type="text" id="input_sql" />
+                <button class="btn btn-primary" type="button" onclick="doSql();">Execute</button>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+
+                        <td>No</td><td>Name</td><td>Type</td><td>Length</td>
+                    </tr>                    
+
+                </thead>
+                <tbody id="table">
+
+
+                </tbody>
+            </table>
+            <div class="well">
+                <div class="hero unit" >
+                    <code>
+                    <p id="class_define"></p>
+                    </code>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+<script>
+    function doSql()
+    {
+        var inputSql = $("#input_sql").val();
+        getTable(inputSql);
+    }
+    function getTable(tablename)
+    {
+        
+        $.getJSON('/api/db/columns', "tablename=" + tablename, function (json, a2, a3) {
+            if (a2 == "success") {
+                $("#table").empty();
+                var class_define = "[Table(\"" + tablename + "\")]<br/>";
+                class_define += "public class " + tablename + "<br/>";
+                class_define += "{<br/>";
+                
+                for (var i = 0; i < json.length; i++) {
+                    var item = json[i];
+                    var tr = "<tr><td>" + i + "</td><td>" + item.Name + "</td><td>" + item.Type + "</td><td>" + item.Length + "</td></tr>";
+                    $(tr).appendTo("#table");
+                    class_define += "   public " + getType(item.Type) + " " + item.Name + " {get;set;}<br/>";
+                }
+                class_define += "}<br/>";
+                $("#class_define").html(class_define);
+            }
+            
+        });
+    }
+    function getType(type) {
+        if (type == null) {
+            return "Unknown";
+        }
+        var dict = {
+            "bit":"bool",
+            "smallint":"short",
+            "tinyint":"byte",
+            "int": "int?",
+            "numeric":"Decimal",
+            "decimal":"Decimal",
+            "float":"float",
+            "real":"Double",
+            "datetime":"DateTime?",
+            "nvarchar": "String",
+            "uniqueidentifier":"String",
+            "varchar": "String",
+            "char": "String",
+            "text": "String",
+            "nchar": "String",
+        };
+        return dict[type.toLowerCase()];
+
+    }
+    getTable('@ViewBag.list[0]');
+</script>

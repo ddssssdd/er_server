@@ -164,6 +164,7 @@
     <Compile Include="Expense\Person.cs" />
     <Compile Include="Expense\Phone.cs" />
     <Compile Include="Expense\Relocatee.cs" />
+    <Compile Include="Expense\RelocateeService.cs" />
     <Compile Include="Expense\ReturnStatus.cs" />
     <Compile Include="Expense\Service.cs" />
     <Compile Include="Expense\Users.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Helpers\DbHelper.cs" />
     <Compile Include="Helpers\Expando.cs" />
     <Compile Include="Helpers\PropertyBag.cs" />
+    <Compile Include="Models\Display.cs" />
     <Compile Include="Models\LocalDatabase.cs" />
     <Compile Include="Models\Push.cs" />
     <Compile Include="Models\UserDevices.cs" />

@@ -1,29 +1,36 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@section menu{
-    <li class="active">@Html.ActionLink("Home", "Index")</li>
-    <li>@Html.ActionLink("APIs", "Apis")</li>
-    <li class="dropdown">
-        <a class="dropdown-toggle"
-            data-toggle="dropdown"
-            href="#">DataBase
-        <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu">
-            @Html.Action("ConnList")
-            <hr />
-            <li><a href="#addModal" role="button"  data-toggle="modal">Add New Connection</a></li>
-
-        </ul>
-    </li>
-
-
+﻿@model ExpenseReportServer.Models.Connection
+@{
+    ViewBag.Title = "Database";
+    Layout = "~/Views/Home/_menu.cshtml";
+    
 }
 
-@RenderBody();
+<div class="container-fluid">
+    <h3>Conn: @Model.Name</h3>
+    <div class="row-fluid">
+         
+        <div class="span3 bs-docs-sidebar">
+           
+            <ul class="nav nav-list bs-docs-sidenav">
+                <li><a href="#" onclick=" return false;">Tables<i class="icon-chevron-right"></i></a></li>
+                <li><a href="#" onclick=" return false;">Views<i class="icon-chevron-right"></i></a></li>
+                <li><a href="#" onclick=" return false;">StoredProcedures<i class="icon-chevron-right"></i></a></li>
+                <li><a href="#" onclick=" return false;">Functions<i class="icon-chevron-right"></i></a></li>
+                <li><a href="#" onclick=" return false;">Triggers<i class="icon-chevron-right"></i></a></li>
+            </ul>
+            
+        </div>
+        <div class="span9">
+            <div class="input-append">
+                <input class="input-xxlarge" type="text" id="input_sql" />
+                <button class="btn btn-primary" type="button" onclick="doSql();">Search</button>
+            </div>
 
+        </div>
 
+    </div>
+
+</div>
 <div id="addModal" class="modal hide fade">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -86,3 +93,10 @@
     </div>
 
 </div>
+<script>
+    function getConnection( id)
+    {
+        alert(id);
+    }
+
+</script>

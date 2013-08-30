@@ -36,11 +36,9 @@ namespace ExpenseReportServer.Expense
 
         public DbSet<EmailType> EmailTypes { get; set; }
         public DbSet<PhoneType> PhoneTypes { get; set; }
-        public DataTable tables()
-        {
-            this.Database.Connection.Open();
-            return this.Database.Connection.GetSchema("Tables");
-        }
+        
     }
+
+
 
 }

@@ -13,8 +13,11 @@ namespace ExpenseReportServer.Controllers
     public class ExpenseReportsController : ApiController
     {
         private const string upload_to_folder = @"D:\SC\Web\SC6-UploadedFile\SC6QA\om\ERReceipt\";
-        private const string upload_folder = "/Content/upload/";
         private const string reference_url = @"http://apps.synvata.com:8087/MC6Dev/UploadedFile/om/ERReceipt/";
+
+        //private string upload_to_folder = System.Web.HttpContext.Current.Server.MapPath("~/Content/upload/");
+        //private string reference_url = @"http://10.4.30.190:4205/Content/upload/";
+
         private ExpenseDB db = new ExpenseDB();
         [HttpGet]
         public ReturnStatus reports(int relocateeId)
@@ -35,6 +38,18 @@ namespace ExpenseReportServer.Controllers
             else {
                 return new ReturnStatus { status = false, message = "Cannot find report" };
             }
+        }
+        [HttpGet]
+        public ReturnStatus existsReportName(String name,int relocateeId, int reportId=0)
+        {
+            Boolean exists;
+            if (reportId == 0)
+            {
+                exists = db.ExpenseReports.Any(er =>er.Name.ToLower().Equals(name.Trim().ToLower()) && er.RelocateeID==relocateeId);
+            }else{
+                exists = db.ExpenseReports.Any(er => er.Name.ToLower().Equals(name.Trim().ToLower()) && er.RelocateeID == relocateeId && er.ExpenseReportID != reportId);
+            }
+            return new ReturnStatus{status = true,result=exists};
         }
         [HttpGet]
         public ReturnStatus removeReport(int reportId)
