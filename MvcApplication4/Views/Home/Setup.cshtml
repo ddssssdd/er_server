@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Setup";
+    Layout = "~/Views/Home/_menu.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="row-fluid">
+
+        <div class="span3 bs-docs-sidebar">
+
+            <ul class="nav nav-list bs-docs-sidenav " >
+                @foreach (var field in @ViewBag.fields)
+                {
+                    <li  id="li_@field.Name">                        
+                        <a href="#" draggable="true" ondragstart="handleSourceDragStart(event,'@field.Name');">@field.Name</a>
+                    </li>
+                }
+
+            </ul>
+
+        </div>
+        <div class="span4" id="groups">
+            
+            
+             <ul class="nav nav-list bs-docs-sidenav"  ondragover="handleTargetDragOver(event);"
+                            ondrop="handleTargetDrop(event,1);" id="targets_1">
+                    <li> <a href="#" ><b>Group 1</b></a></li>
+            </ul>
+            
+        </div>
+        <div class="span5">
+            <div class="btn btn-group bs-docs-sidenav">
+                 <button class="btn btn-primary" onclick="addNewGroup();">Add New Group</button>
+                 <button class="btn btn-danger" onclick="dropLastGroup();">Drop Last Group</button>
+                <button class="btn btn-primary" onclick="togglePosition();">Make Position Fixed</button>
+            </div>
+           
+
+        </div>
+    </div>
+
+</div>
+<script>
+ 
+
+    var list = [];
+    var groupIndex = 1;
+    function addNewGroup()
+    {
+        groupIndex++;
+        var group = "<ul class='nav nav-list bs-docs-sidenav'  ondragover='handleTargetDragOver(event);' \
+                          ondrop='handleTargetDrop(event,"+ groupIndex + ");' id='targets_" + groupIndex + "'> \
+                            <li> <a href='#' ><b>Group "+groupIndex+"</b></a></li> \
+                    </ul>";
+        $(group).appendTo("#groups");
+    }
+    function dropLastGroup()
+    {
+        if (groupIndex > 1) {
+            var group = $("#targets_" + groupIndex)
+            group.children("li").each(function (index) {
+                var i = list.indexOf(this.id);
+                if (i > -1) {
+                    list.splice(i, 1);
+                    $("#li_" + this.id).show();
+                }
+            });
+            group.remove();
+            groupIndex--;
+        }
+    }
+
+    function handleSourceDragStart(e,fieldName) {
+        e.dataTransfer.setData("Text", fieldName);
+        
+    }
+    
+    function handleTargetDragOver(e) {
+        
+        if (e.preventDefault) {
+            
+            e.preventDefault(); // Necessary. Allows us to drop.
+            
+        }
+        
+        e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+        
+        return false;
+        
+    }
+    function handleTargetDrop(e,index)
+    {
+        var fieldname = e.dataTransfer.getData("Text");
+        if (list.indexOf(fieldname) < 0) {
+            var li = "<li id='"+fieldname+"'> <a href='#' >" + fieldname + "<i class='icon-chevron-right'></i></a></li>";
+            //var li = "<li> <input type='text' class='input-large' value='"+fieldname+"' placeholder='"+fieldname+"' /></li>";
+            $(li).appendTo("#targets_"+index);
+            list.push(fieldname);
+            $("#li_" + fieldname).hide();
+        }
+        
+    }
+    
+    function togglePosition() {
+        $("#groups").toggleClass("affix");
+    }
+
+</script>

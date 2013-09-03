@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Objects;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
@@ -92,7 +93,38 @@ namespace ExpenseReportServer.Helpers
             dt.Load(reader);
             return dt;
         }
-        
+        public List<SqlObject> search(String keyword)
+        {
+            String sql;
+            if (keyword.StartsWith(":"))
+            {
+                sql = String.Format("select * from sys.objects where {0} order by type", keyword.Substring(1));
+            }
+            else {
+                sql = String.Format("select * from sys.objects where name like '%{0}%' order by type", keyword);
+            }
+            
+            return _db.Database.SqlQuery<SqlObject>(sql, new object[] { }).ToList();
+            /*
+            String sql = "select * from sys.all_objects where name like '%@p0%'";
+            return _db.Database.SqlQuery<SqlObject>(sql,  new object[]{new SqlParameter("p0",keyword)}).ToList();
+            */
+        }
+        public List<SqlModule> defination(int object_id)
+        {
+            String sql = String.Format("select * from sys.sql_modules where object_id={0}",object_id);
+            return _db.Database.SqlQuery<SqlModule>(sql).ToList();
+        }
+        public List<SqlSummary> summary()
+        {
+            String sql ="select type_desc,count(object_id) as count from sys.objects group by type_desc order by type_desc";
+            return _db.Database.SqlQuery<SqlSummary>(sql).ToList();
+        }
+    }
+    public class SqlSummary
+    {
+        public String type_desc { get; set; }
+        public int count {get;set;}
     }
     public class FieldDefine
     {
