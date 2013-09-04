@@ -143,6 +143,50 @@ namespace ExpenseReportServer.Controllers
 
             return "Nothing";
         }
+        [HttpGet]
+        public object saveSection(String tableName, String sectionName,int groupIndex=0)
+        {
+            var result = db.Sections.Where(section => section.ClassName.Equals(tableName) && section.Title.Equals(sectionName)).FirstOrDefault();
+            if (result == null)
+            {
+                result = new Section();
+                result.ClassName = tableName;
+                result.Title = sectionName;
+                result.GroupIndex = groupIndex;
+                db.Sections.Add(result);
+                db.SaveChanges();
+                
+            }
+            return result;
+        }
+        [HttpGet]
+        public object getSections(String tableName)
+        {
+            var result = db.Sections.Where(section => section.ClassName.Equals(tableName)).ToList();
+            return result;
+        }
+        [HttpGet]
+        public object saveCell(int sectionId, String fieldName, String title,int cellIndex=0) {
+            var result = db.CellDatas.Where(cell => cell.PropertyName.Equals(fieldName) && cell.section_id == sectionId).FirstOrDefault();
+            if (result == null) {
+                result = new CellData();
+                result.section_id = sectionId;
+                result.PropertyName = fieldName;
+                db.CellDatas.Add(result);
+            }
+            result.Title = title;
+            result.CellIndex = cellIndex;
+            db.SaveChanges();
+            return result;
+        }
+        [HttpGet]
+        public object clearSections(String tableName)
+        { 
+            int count = db.Database.ExecuteSqlCommand("delete from CellData where section_id in (select id from section where ClassName='"+tableName+"')");
+            count += db.Database.ExecuteSqlCommand("delete from section where ClassName='"+tableName+"'");
+            return new ReturnStatus { status = true, result = count };
+
+        }
     }
     
 }

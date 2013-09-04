@@ -66,6 +66,7 @@ namespace ExpenseReportServer.Controllers
             Connection cnn = localDb.Connections.Find(id);
             List<FieldDefine> fields = (new DbHelper(new System.Data.Entity.DbContext(cnn.ConnectionString))).columns(name);
             ViewBag.cnnId = id;
+            ViewBag.tablename = name;
             ViewBag.fields = fields;
             return View();
         }

@@ -7,7 +7,7 @@
 
     <div class="row-fluid">
 
-        <div class="span3 bs-docs-sidebar">
+        <div class="span2 bs-docs-sidebar">
 
             <ul class="nav nav-list bs-docs-sidenav " >
                 @foreach (var field in @ViewBag.fields)
@@ -20,56 +20,122 @@
             </ul>
 
         </div>
-        <div class="span4" id="groups">
+        <div class="span3" id="groups">
             
             
-             <ul class="nav nav-list bs-docs-sidenav"  ondragover="handleTargetDragOver(event);"
-                            ondrop="handleTargetDrop(event,1);" id="targets_1">
-                    <li> <a href="#" ><b>Group 1</b></a></li>
-            </ul>
+            
             
         </div>
-        <div class="span5">
+        <div class="span7">
             <div class="btn btn-group bs-docs-sidenav">
                  <button class="btn btn-primary" onclick="addNewGroup();">Add New Group</button>
                  <button class="btn btn-danger" onclick="dropLastGroup();">Drop Last Group</button>
                 <button class="btn btn-primary" onclick="togglePosition();">Make Position Fixed</button>
+                <button class="btn btn-primary" onclick="saveSettings();">Save Settings</button>
             </div>
            
+            <div class="row">
+                <table class="table table-bordered" id="editTable">
+                    <thead>
+                        <tr class="success">
+                            <td>
+                                <b>Field</b>
+                            </td>
+                            <td>
+                                <b>Title</b>
+                            </td>
+                            <td>
+                                <b>Formmater</b>
+                            </td>
+                            <td>
+                                <b>Link</b>
+                            </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="text" class="input-small uneditable-input" placeholder="label" id="item_field"/>
+                            </td>
+                            <td>
+                                <input type="text" class="input-small" placeholder="label" id="item_title"/>
+                            </td>
+                            <td>
+                                <select id ="item_formmater">
+                                    <option>None</option>
+                                    <option>Currency</option>
+                                    <option>DateTime</option>
+                                    <option>Trim</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select id="item_link">
+                                    <option>None</option>
+                                    <option>Entity1</option>
+                                    <option>Entity2</option>
+                                    <option>Endtity3</option>
+                                </select>
+                            </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <button class="btn btn-primary" onclick="saveItem();">Save</button>
+                            <button class="btn btn-danger" onclick="removeLiItem();">Remove from group</button>
+                        </td>
 
+                    </tr>
+                    </tbody>
+                    
+                </table>
+                
+            </div>
         </div>
     </div>
 
 </div>
 <script>
  
-
+    var tablename='@ViewBag.tablename';
     var list = [];
-    var groupIndex = 1;
+    var groupIndex = 0;
+    var groups = [];
+    
     function addNewGroup()
     {
         groupIndex++;
+        addGroup(groupIndex-1, "Group " + groupIndex, "Group " + groupIndex);
+        
+    }
+    function addGroup(index, name, title)
+    {
+        groups.push({ index: index, name: name, title: title });
         var group = "<ul class='nav nav-list bs-docs-sidenav'  ondragover='handleTargetDragOver(event);' \
-                          ondrop='handleTargetDrop(event,"+ groupIndex + ");' id='targets_" + groupIndex + "'> \
-                            <li> <a href='#' ><b>Group "+groupIndex+"</b></a></li> \
+                          ondrop='handleTargetDrop(event,"+ (index+1) + ");' id='targets_" + (index+1) + "'> \
+                            <li onclick='changeTitle(this,"+ index + ");' > <a href='#' ><b>" + title + "</b></a></li> \
                     </ul>";
         $(group).appendTo("#groups");
     }
     function dropLastGroup()
     {
-        if (groupIndex > 1) {
+        if (groupIndex > 0) {
             var group = $("#targets_" + groupIndex)
             group.children("li").each(function (index) {
+                removeItem(this.id, groupIndex);
+                $("#li_" + this.id).show();
+                /*
                 var i = list.indexOf(this.id);
                 if (i > -1) {
                     list.splice(i, 1);
                     $("#li_" + this.id).show();
                 }
+                */
             });
             group.remove();
             groupIndex--;
+            groups.splice(groups.length - 1, 1);
         }
     }
+
 
     function handleSourceDragStart(e,fieldName) {
         e.dataTransfer.setData("Text", fieldName);
@@ -89,21 +155,160 @@
         return false;
         
     }
+    function removeItem(fieldname,gindex)
+    {
+        var index = list.length-1;
+        while (index > -1)
+        {
+            var item = list[index];
+            if (item.name == fieldname && item.group == gindex) {
+                list.splice(index, 1);
+            }
+            index--;
+        }
+    }
+    function findField(fieldname,groupIndex)
+    {
+        
+        for (var i = 0; i < list.length; i++) {
+            var item = list[i];
+            if (item.name == fieldname && item.group == groupIndex) {
+
+                return item;
+            }
+        }
+        return null;
+    }
     function handleTargetDrop(e,index)
     {
         var fieldname = e.dataTransfer.getData("Text");
-        if (list.indexOf(fieldname) < 0) {
-            var li = "<li id='"+fieldname+"'> <a href='#' >" + fieldname + "<i class='icon-chevron-right'></i></a></li>";
-            //var li = "<li> <input type='text' class='input-large' value='"+fieldname+"' placeholder='"+fieldname+"' /></li>";
-            $(li).appendTo("#targets_"+index);
-            list.push(fieldname);
-            $("#li_" + fieldname).hide();
+        if (findField(fieldname, index) == null) {
+            addItem(fieldname, index, fieldname);
         }
         
     }
-    
+    function addItem(fieldname,index,title)
+    {
+        var li = "<li id='" + fieldname + "' onclick='changeField(this," + index + ");'> <a href='#' >" + title + "<i class='icon-chevron-right'></i></a></li>";
+        
+        $(li).appendTo("#targets_" + index);
+        list.push({ group: index, name: fieldname, title: title });
+        $("#li_" + fieldname).hide();
+    }
     function togglePosition() {
         $("#groups").toggleClass("affix");
     }
+    var edit_index;
+    var edit_li;
+    var isEditGroup;
+    var isEditField;
+    var editGroupIndex;
+    var editField;
+    function changeTitle(li,index)
+    {
+        
+        $("#editTable").show();
+        isEditGroup = true;
+        edit_li = li;
+        edit_index = index;
+        var g = groups[index];
+        $("#item_field").val(g.name);
+        $("#item_title").val(g.title);
+    }
+    function changeField(li,gindex)
+    {
+        
+        
+        editField = findField(li.id, gindex);
+        
+        if (editField != null) {
+            $("#editTable").show();
+            isEditGroup = false;
+            edit_li = li;
+            editGroupIndex = gindex;
+            $("#item_field").val(editField.name);
+            $("#item_title").val(editField.title);
+            isEditField = true;
+            
+        } 
+        
+    }
+    function removeLiItem()
+    {
+        if (isEditField && editGroupIndex > -1 & edit_li != null && editField != null) {
+            removeItem(editField.name, editGroupIndex);
+            $("#li_" + editField.name).show();
+            edit_li.remove();
 
+        }
+    }
+    function saveItem()
+    {
+        if (isEditGroup && edit_index!=-1 && edit_li!=null)
+        {
+            var title = $("#item_title").val();
+            groups[edit_index].title = title;
+            $(edit_li).html(" <a href='#' ><b>" + title + "</b></a>");
+            $("#editTable").hide();
+            isEditGroup = false;
+            edit_index = -1;
+            edit_li = null;
+        }
+        if (isEditField && editGroupIndex > -1 & edit_li != null && editField!=null)
+        {
+            editField.title = $("#item_title").val();
+            $(edit_li).html(" <a href='#' >" + editField.title + "<i class='icon-chevron-right'></i></a>");
+            isEditField = false;
+            editGroupIndex = -1;
+            edit_li = null;
+            editField = null;
+
+        }
+        
+    }
+    function saveSettings()
+    {
+        $.get("/api/db/clearSections?tableName=" + tablename, "", function (json) {
+            
+            for(var i=0;i<groups.length;i++) {
+                var group = groups[i];
+                $.get("/api/db/saveSection?tableName=" + tablename + "&sectionName=" + group.title+"&groupIndex="+i, "", function (json) {
+                    if (json.Id) {
+                        saveCells(json.Id, group.index + 1);
+                    }
+                });
+            }
+        })
+        
+    }
+    function saveCells(sectionId, gIndex)
+    {
+        var i=0;
+        list.forEach(function (field) {
+            if (field.group == gIndex) {
+                i++;
+                $.get("/api/db/saveCell?sectionId=" + sectionId + "&fieldName=" + field.name + "&title=" + field.title+"&cellIndex="+i, "", function (json) {
+                    //succss;
+                });
+            }
+        });
+    }
+    function init() {
+        $("#editTable").hide();
+
+        $.get("/api/db/getSections?tablename=" + tablename, "", function (json) {
+            for (var i = 0; i < json.length; i++)
+            {
+                addGroup(i, "Group " + (i + 1), json[i].Title);
+               
+                for (var j = 0; j < json[i].Items.length; j++)
+                {
+                    var f = json[i].Items[j];
+                    addItem(f.PropertyName, i+1, (f.title == null) ? f.PropertyName : f.title);
+                }
+            }
+            groupIndex = groups.length;
+        });
+    }
+    init();
 </script>

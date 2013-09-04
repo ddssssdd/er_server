@@ -17,6 +17,7 @@ namespace ExpenseReportServer.Models
         public String ClassName { get; set; }
         public String Title { get; set; }
         public String Icon { get; set; }
+        public int? GroupIndex { get; set; }
         [ForeignKey("section_id")]
         public virtual List<CellData> Items { get; set; }
     }
@@ -27,10 +28,9 @@ namespace ExpenseReportServer.Models
         public int Id { get; set; }
         public int section_id { get; set; }
         public String PropertyName { get; set; }
-        [NotMapped]
-        public int Index { get; set; }
-        [NotMapped]
         public String Title { get; set; }
+        public int? CellIndex { get; set; }
+        
         [NotMapped]
         public String Detail { get; set; }
 
@@ -68,7 +68,7 @@ namespace ExpenseReportServer.Models
                 Object value = property.GetValue(_instance);
                 data.Title = data.PropertyName;
                 data.Detail = value.ToString();
-                data.Index = index++;
+                data.CellIndex = index++;
             }
             catch (Exception e)
             { 
