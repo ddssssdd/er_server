@@ -36,6 +36,7 @@ namespace ExpenseReportServer.Expense
 
         public DbSet<EmailType> EmailTypes { get; set; }
         public DbSet<PhoneType> PhoneTypes { get; set; }
+        public DbSet<VW_Finance> Finances { get; set; }
         
     }
 

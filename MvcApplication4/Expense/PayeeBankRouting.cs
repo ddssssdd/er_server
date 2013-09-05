@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -23,5 +24,11 @@ namespace ExpenseReportServer.Expense
         public DateTime EntryDate { get; set; }
         public Int32 UpdateSeqNo { get; set; }
         public Int32 PrimaryAcct { get; set; }
+        public List<PayeeBankRouting> RelocatePayeeBankRoutings(ExpenseDB db, int relocateeId)
+        {
+            return (from payeeBankRouting in db.PayeeBankRoutings
+                    where payeeBankRouting.EntityID == relocateeId
+                    select payeeBankRouting).ToList();
+        }
     }
 }

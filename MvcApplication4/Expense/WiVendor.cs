@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -50,5 +51,13 @@ namespace ExpenseReportServer.Expense
         public String IntermedSWIFTCode { get; set; }
         public String IntermedABANum { get; set; }
         public String IntermedIBAN { get; set; }
+
+        public List<WiVendor> RelocateeWivendors(ExpenseDB db, Relocatee relocatee)
+        {
+            return (from wivender in db.WiVendors
+                    where (wivender.CompanyID == 0 || wivender.CompanyID == relocatee.ClientID) && wivender.EntityID == relocatee.RelocateeID
+                    select wivender).ToList();
+            
+        }
     }
 }

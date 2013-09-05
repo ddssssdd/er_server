@@ -12,7 +12,12 @@
                 var item = json[i];
                 var tr = "<tr><td>" + i + "</td><td>" + item.Name + "</td><td>" + item.Type + "</td><td>" + item.Length + "</td></tr>";
                 $(tr).appendTo(divTable);
-                class_define += "   public " + getType(item.Type) + " " + item.Name + " {get;set;}<br/>";
+                if (item.Name.indexOf(" ") < 0) {
+                    class_define += "   public " + getType(item.Type) + " " + item.Name + " {get;set;}<br/>";
+                } else {
+                    class_define += "   [Column(\"" + item.Name + "\")]<br/>";
+                    class_define += "   public " + getType(item.Type) + " " + item.Name.replace(/ /g,"_") + " {get;set;}<br/>";
+                }
             }
             class_define += "}<br/>";
             $(divClass).html(class_define);
@@ -33,6 +38,7 @@ function getType(type) {
         "decimal": "Decimal",
         "float": "float",
         "real": "Double",
+        "money":"Decimal",
         "datetime": "DateTime?",
         "nvarchar": "String",
         "uniqueidentifier": "String",

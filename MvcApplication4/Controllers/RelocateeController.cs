@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using ExpenseReportServer.Expense;
 using ExpenseReportServer.Models;
+using System.Collections;
 
 namespace ExpenseReportServer.Controllers
 {
@@ -88,39 +89,105 @@ namespace ExpenseReportServer.Controllers
         [HttpGet]
         public ReturnStatus wivendors(int id)
         {
+            /*
             Relocatee relocatee = db.Relocatees.Find(id);
+            
             if (relocatee != null)
-            {
-                var list = (from wivender in db.WiVendors
-                            where (wivender.CompanyID == 0 || wivender.CompanyID == relocatee.ClientID) && wivender.EntityID == id
-                            select wivender).ToList();
-                return new ReturnStatus { status = true, result = list };
+            {               
+                return new ReturnStatus { status = true, result =new DisplayListFactory<WiVendor>(new WiVendor().RelocateeWivendors(db,relocatee)).items };
             }
             else
             {
                 return new ReturnStatus { status = false };
             }
+             */
+            return new ReturnStatus(new DisplayFactory<WiVendor>(db.WiVendors.Find(id)).sections);
         }
         [HttpGet]
         public ReturnStatus payeeBankRoutings(int id)
         {
-            Relocatee relocatee = db.Relocatees.Find(id);
-            if (relocatee != null)
-            {
-                var list = (from payeeBankRouting in db.PayeeBankRoutings
-                            where payeeBankRouting.EntityID == id
-                            select payeeBankRouting).ToList();
-                return new ReturnStatus { status = true, result = list };
-            }
-            else
-            {
-                return new ReturnStatus { status = false };
-            }
+            return new ReturnStatus(new DisplayFactory<PayeeBankRouting>(db.PayeeBankRoutings.Find(id)).sections);
+            //return new ReturnStatus { status = true, result =new DisplayListFactory<PayeeBankRouting>(new PayeeBankRouting().RelocatePayeeBankRoutings(db, id)).items };
         }
         [HttpGet]
         public ReturnStatus services(int id)
         {
             return new ReturnStatus { status = true, result = new RelocateeService().items(db, id) };
+        }
+        [HttpGet]
+        public object finance(int id)
+        {
+            return new ReturnStatus ( new DisplayFactory<VW_Finance>(db.Finances.Find(id)).sections );
+            //return new DisplayListFactory<VW_Finance>(new VW_Finance().RelocateeFinances(db, id)).items;
+        }
+        [HttpGet]
+        public object summary(int id)
+        {
+            Relocatee relocatee = db.Relocatees.Find(id);
+            if (relocatee != null)
+            {
+                var list = new ArrayList();
+                list.Add(new { title="Base Information",list=new DisplayFactory<Relocatee>(relocatee).items});
+                list.Add(new
+                {
+                    title = "Address",
+                    list = new DisplayListFactory<Address>(new Address().RelocateeAddress(db, id),
+                        (Address item) => { return String.Format("{0},{1},{2}", item.Address1, item.City, item.State); },
+                        (Address item) => { return item.ZipCode.ToString(); }).items
+                });
+                list.Add(new
+                {
+                    title = "Phone",
+                    list = new DisplayListFactory<Phone>(new Phone().RelocatePhones(db, id),
+                        (Phone item) => { return item.PhoneType.Description; },
+                        (Phone item) => { return String.Format("{0} {1}", item.PhoneNbr, item.PhoneExt); }).items
+                });
+                list.Add(new
+                {
+                    title = "Email",
+                    list = new DisplayListFactory<Email>(new Email().RelocateeEmails(db, id),
+                        (Email item) => { return  item.EmailType.Description;},
+                        (Email item) => { return item.EMail; }).items
+                });
+                list.Add(new
+                {
+                    title = "WiVendor",
+                    list = new DisplayListFactory<WiVendor>(new WiVendor().RelocateeWivendors(db, relocatee),
+                        (WiVendor wv) => { return "WiVendor"; },
+                        (WiVendor wv) => { return wv.bankAccountName; },
+                        (WiVendor wv) => { return String.Format("relocatee/wivendors/{0}", wv.WireID); } 
+                        ).items
+                });
+
+                list.Add(new
+                {
+                    title = "PayeeBankRouting",
+                    list = new DisplayListFactory<PayeeBankRouting>(new PayeeBankRouting().RelocatePayeeBankRoutings(db, id),
+                        (PayeeBankRouting pb) => { return "Payee bank routing"; },
+                        (PayeeBankRouting pb) => { return pb.ABA_Routing; },
+                        (PayeeBankRouting pb) => {return String.Format("relocatee/payeeBankRoutings/{0}", pb.PayeeBankRoutingID);}
+                        ).items
+                });
+                list.Add(new
+                {
+                    title = "Finance",
+                    list = new DisplayListFactory<VW_Finance>(new VW_Finance().RelocateeFinances(db, id),
+                        (VW_Finance f) => { return "Tax year"; },
+                        (VW_Finance f) => { return f.Tax_Year; },
+                        (VW_Finance f) => { return String.Format("relocatee/finance/{0}", f.FinanceID);}
+                        ).items
+                });
+                
+                return new ReturnStatus
+                {
+                    status = true,
+                    result = list
+                };
+            }
+            else
+            {
+                return new ReturnStatus { status = false, message = "Can not find relocateeID" };
+            }
         }
     }
 }

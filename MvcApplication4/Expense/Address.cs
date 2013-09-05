@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -33,7 +35,16 @@ namespace ExpenseReportServer.Expense
         public Int32? Attr_Services { get; set; }
         public Int32? ClientLocationID { get; set; }
 
+        public List<Address> RelocateeAddress(ExpenseDB db, int relocateeId)
+        {
+            return (from address in db.Addresses
+                    where address.RelocateeID == relocateeId
+                    select address).ToList();
+        }
 
+
+
+       
     }
 
 }

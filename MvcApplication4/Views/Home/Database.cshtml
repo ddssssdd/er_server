@@ -23,7 +23,7 @@
 
         </div>
         <div class="span9">
-            <h4>Conn: @Model.Name (@Model.Host)</h4>
+            <h4 id="top">Conn: @Model.Name (@Model.Host)</h4>
 
             <div class="input-append">
                 <input class="input-xxlarge" type="text" id="input_sql" />
@@ -67,6 +67,8 @@
                                 <li><a href="#" onclick="setPageSize(50); return false;">50</a></li>
                                 <li><a href="#" onclick="setPageSize(100); return false;">100</a></li>
                             </ul>
+                            <button class="btn-link" onclick="document.location='#schema';">Structure</button>
+                            <button class="btn-link" onclick="document.location='#class_define';">Class Define</button>
                         </div>
                     </div>
 
@@ -100,6 +102,7 @@
                     <div class="btn-group" id="table_control">
                         <button class="btn btn-primary" onclick="showData();">Data</button>
                         <button class="btn btn-primary" onclick="gotoSettings();">Class Settings</button>
+                        <button class="btn-link" onclick="document.location='#top';">Go Top</button>
                     </div>
 
                 </div>

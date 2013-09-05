@@ -10,7 +10,13 @@ namespace ExpenseReportServer.Expense
         public Boolean status;
         public String message;
         public Object result;
-        
+        public ReturnStatus()
+        { }
+        public ReturnStatus(Object obj)
+        {
+            result = obj;
+            status = result != null;
+        }
     }
     
 }

@@ -158,6 +158,7 @@
     <Compile Include="Expense\ExpenseReportDetail.cs" />
     <Compile Include="Expense\ExpenseReportReceipts.cs" />
     <Compile Include="Expense\ExpenseView.cs" />
+    <Compile Include="Expense\Finance.cs" />
     <Compile Include="Expense\Massive.cs" />
     <Compile Include="Expense\Message.cs" />
     <Compile Include="Expense\PayeeBankRouting.cs" />
