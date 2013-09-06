@@ -141,6 +141,7 @@
     <Compile Include="Controllers\ExpenseReportsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RelocateeController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\UserLearnController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Expense\Address.cs" />
@@ -167,7 +168,7 @@
     <Compile Include="Expense\Relocatee.cs" />
     <Compile Include="Expense\RelocateeService.cs" />
     <Compile Include="Expense\ReturnStatus.cs" />
-    <Compile Include="Expense\Service.cs" />
+    <Compile Include="Expense\Service\Appraisal.cs" />
     <Compile Include="Expense\Users.cs" />
     <Compile Include="Expense\WiVendor.cs" />
     <Compile Include="Global.asax.cs">
@@ -251,6 +252,7 @@
     <Content Include="Global.asax" />
     <None Include="Properties\PublishProfiles\localhost.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <Content Include="Readme.txt" />
     <Content Include="Scripts\bootstrap-tooltip.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

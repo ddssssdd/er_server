@@ -268,8 +268,9 @@
     }
     function saveSettings()
     {
-        $.get("/api/db/clearSections?tableName=" + tablename, "", function (json) {
-            
+        
+        //$.get("/api/db/clearSections?tableName=" + tablename, "", function (json) {
+        $.get('@(Url.HttpRouteUrl("DefaultApi",new { controller="Db",action="clearSections"}))',"tableName=" + tablename, function (json) {
             for(var i=0;i<groups.length;i++) {
                 var group = groups[i];
                 $.get("/api/db/saveSection?tableName=" + tablename + "&sectionName=" + group.title+"&groupIndex="+i, "", function (json) {
@@ -287,7 +288,8 @@
         list.forEach(function (field) {
             if (field.group == gIndex) {
                 i++;
-                $.get("/api/db/saveCell?sectionId=" + sectionId + "&fieldName=" + field.name + "&title=" + field.title+"&cellIndex="+i, "", function (json) {
+                // '@(Url.HttpRouteUrl("DefaultApi",new { controller="Db",action="defination"}))'
+                $.get('@(Url.HttpRouteUrl("DefaultApi",new { controller="Db",action="saveCell"}))', "sectionId=" + sectionId + "&fieldName=" + field.name + "&title=" + field.title + "&cellIndex=" + i, function (json) {
                     //succss;
                 });
             }
@@ -296,7 +298,7 @@
     function init() {
         $("#editTable").hide();
 
-        $.get("/api/db/getSections?tablename=" + tablename, "", function (json) {
+        $.get( '@(Url.HttpRouteUrl("DefaultApi",new { controller="Db",action="getSections"}))',"tablename=" + tablename,  function (json) {
             for (var i = 0; i < json.length; i++)
             {
                 addGroup(i, "Group " + (i + 1), json[i].Title);

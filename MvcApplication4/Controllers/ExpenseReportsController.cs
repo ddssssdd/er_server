@@ -12,11 +12,11 @@ namespace ExpenseReportServer.Controllers
 {
     public class ExpenseReportsController : ApiController
     {
-        private const string upload_to_folder = @"D:\SC\Web\SC6-UploadedFile\SC6QA\om\ERReceipt\";
-        private const string reference_url = @"http://apps.synvata.com:8087/MC6Dev/UploadedFile/om/ERReceipt/";
+        //private const string upload_to_folder = @"D:\SC\Web\SC6-UploadedFile\SC6QA\om\ERReceipt\";
+        //private const string reference_url = @"http://apps.synvata.com:8087/MC6Dev/UploadedFile/om/ERReceipt/";
 
-        //private string upload_to_folder = System.Web.HttpContext.Current.Server.MapPath("~/Content/upload/");
-        //private string reference_url = @"http://10.4.30.190:4205/Content/upload/";
+        private string upload_to_folder = System.Web.HttpContext.Current.Server.MapPath("~/Content/upload/");
+        private string reference_url = @"http://10.4.30.190:4205/Content/upload/";
 
         private ExpenseDB db = new ExpenseDB();
         [HttpGet]

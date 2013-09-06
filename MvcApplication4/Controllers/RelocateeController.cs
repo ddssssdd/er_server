@@ -88,19 +88,7 @@ namespace ExpenseReportServer.Controllers
         }
         [HttpGet]
         public ReturnStatus wivendors(int id)
-        {
-            /*
-            Relocatee relocatee = db.Relocatees.Find(id);
-            
-            if (relocatee != null)
-            {               
-                return new ReturnStatus { status = true, result =new DisplayListFactory<WiVendor>(new WiVendor().RelocateeWivendors(db,relocatee)).items };
-            }
-            else
-            {
-                return new ReturnStatus { status = false };
-            }
-             */
+        {           
             return new ReturnStatus(new DisplayFactory<WiVendor>(db.WiVendors.Find(id)).sections);
         }
         [HttpGet]

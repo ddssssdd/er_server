@@ -131,7 +131,10 @@ namespace ExpenseReportServer.Models
                     _list.Add(new {Title = _title(item),Detail=_detail(item),Url= _detailUrl!=null?_detailUrl(item):""});
                 }else
                 {
-                    _list.Add(new DisplayFactory<T>(item).sections);
+                    var items =new DisplayFactory<T>(item).sections;
+                    if (items!=null && items.Count()>0){
+                        _list.Add(items[0]);
+                    }
                 }
                 
             });

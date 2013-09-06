@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
+using ExpenseReportServer.Expense.Service;
 
 namespace ExpenseReportServer.Expense
 {
@@ -20,7 +21,7 @@ namespace ExpenseReportServer.Expense
         public DbSet<Phone> Phones { get; set; }
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<ExpenseCode> ExpenseCodes { get; set; }
-        public DbSet<Service> Services { get; set; }
+        
         public DbSet<ExpenseReport> ExpenseReports { get; set; }
         public DbSet<ExpenseReportDetail> ExpenseReportDetail { get; set; }
         public DbSet<ERExpenseTmp> ERExpenseTmp { get; set; }
@@ -37,6 +38,7 @@ namespace ExpenseReportServer.Expense
         public DbSet<EmailType> EmailTypes { get; set; }
         public DbSet<PhoneType> PhoneTypes { get; set; }
         public DbSet<VW_Finance> Finances { get; set; }
+        public DbSet<VW_ERCAppraisal> Appraisal { get; set; }
         
     }
 

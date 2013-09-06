@@ -137,7 +137,7 @@
         result=null;
         $("#columns").empty();
        
-        $.get("/api/db/search?id="+connId+"&keyword="+sql,"",function(json){
+        $.get('@(Url.HttpRouteUrl("DefaultApi",new { controller="Db",action="search"}))',"id="+connId+"&keyword="+sql,function(json){
             
             result = json;
             
@@ -227,7 +227,7 @@
         if (yes)
         {
             
-            $.getJSON("/api/db/removeConn/" + id, null, function (json) {
+            $.getJSON('@(Url.HttpRouteUrl("DefaultApi",new { controller="Db",action="removeConn"}))',"id=" + id, function (json) {
                 if (json.status == true)
                 {
                     alert("Remove success.");
@@ -249,7 +249,7 @@
             $("#table_control").show();
         }else{
             $("#table_control").hide();
-            $.get("/api/db/defination?id="+connId+"&object_id="+sqlobject.object_id,"",function(json){
+            $.get('@(Url.HttpRouteUrl("DefaultApi",new { controller="Db",action="defination"}))',"id="+connId+"&object_id="+sqlobject.object_id,function(json){
                 if (json.length>0)
                 {
                     var item = json[0];
@@ -262,7 +262,7 @@
     function getSummary()
     {
         $("#objects").empty();
-        $.get("/api/db/summary?id="+connId,"",function(json){
+        $.get('@(Url.HttpRouteUrl("DefaultApi",new { controller="Db",action="summary"}))',"id="+connId,function(json){
             for(var i=0;i<json.length;i++)
             {
                 var item = json[i];
@@ -317,11 +317,67 @@
     }
     function gotoSettings()
     {
-       // alert("open new tab");
-        window.open("/home/setup?id="+connId+"&name="+current_object.name);
+        
+        var url ="@Url.Action("setup", "Home", new { })";        
+        window.open( url +"?id="+connId+"&name="+current_object.name);
         
     
     }
+
+    function getTable(tablename,divTable,divClass,id) {
+   
+        var url ='@(Url.HttpRouteUrl("DefaultApi",new { controller="Db",action="columns"}))';
+        $.getJSON(url, "tablename=" + tablename+"&id="+id, function (json, a2, a3) {
+            if (a2 == "success") {
+            
+                $(divTable).empty();
+                var class_define = "[Table(\"" + tablename + "\")]<br/>";
+                class_define += "public class " + tablename + "<br/>";
+                class_define += "{<br/>";
+
+                for (var i = 0; i < json.length; i++) {
+                    var item = json[i];
+                    var tr = "<tr><td>" + i + "</td><td>" + item.Name + "</td><td>" + item.Type + "</td><td>" + item.Length + "</td></tr>";
+                    $(tr).appendTo(divTable);
+                    if (item.Name.indexOf(" ") < 0) {
+                        class_define += "   public " + getType(item.Type) + " " + item.Name + " {get;set;}<br/>";
+                    } else {
+                        class_define += "   [Column(\"" + item.Name + "\")]<br/>";
+                        class_define += "   public " + getType(item.Type) + " " + item.Name.replace(/ /g,"_") + " {get;set;}<br/>";
+                    }
+                }
+                class_define += "}<br/>";
+                $(divClass).html(class_define);
+            }
+
+        });
+    }
+    function getType(type) {
+        if (type == null) {
+            return "Unknown";
+        }
+        var dict = {
+            "bit": "bool",
+            "smallint": "short",
+            "tinyint": "byte",
+            "int": "int?",
+            "numeric": "Decimal",
+            "decimal": "Decimal",
+            "float": "float",
+            "real": "Double",
+            "money":"Decimal",
+            "datetime": "DateTime?",
+            "nvarchar": "String",
+            "uniqueidentifier": "String",
+            "varchar": "String",
+            "char": "String",
+            "text": "String",
+            "nchar": "String",
+        };
+        return dict[type.toLowerCase()];
+
+    }
+
     getSummary();
     $("#result").hide();
     $("#table_control").hide();

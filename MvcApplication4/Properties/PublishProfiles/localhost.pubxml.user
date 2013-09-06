@@ -12,16 +12,19 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="App_Data/er.sdf">
-      <publishTime>08/29/2013 08:05:22</publishTime>
+      <publishTime>09/06/2013 09:42:57</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>05/30/2013 09:31:26</publishTime>
+    </File>
+    <File Include="bin/App_Data/er.sdf">
+      <publishTime>09/06/2013 08:06:01</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>05/30/2013 09:31:06</publishTime>
     </File>
     <File Include="bin/ExpenseReportServer.dll">
-      <publishTime>08/29/2013 09:42:23</publishTime>
+      <publishTime>09/06/2013 09:58:16</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>05/30/2013 09:31:22</publishTime>
@@ -82,6 +85,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Content/bootstrap.min.css">
       <publishTime>07/04/2013 09:36:03</publishTime>
+    </File>
+    <File Include="Content/doc.css">
+      <publishTime>09/03/2013 08:30:01</publishTime>
     </File>
     <File Include="Content/images/glyphicons-halflings-white.png">
       <publishTime>07/04/2013 09:36:03</publishTime>
@@ -302,11 +308,20 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="packages.config">
       <publishTime>07/04/2013 09:36:03</publishTime>
     </File>
+    <File Include="Readme.txt">
+      <publishTime>09/06/2013 08:49:59</publishTime>
+    </File>
+    <File Include="Scripts/bootstrap-tooltip.js">
+      <publishTime>09/03/2013 09:58:50</publishTime>
+    </File>
     <File Include="Scripts/bootstrap.js">
       <publishTime>07/04/2013 09:36:02</publishTime>
     </File>
     <File Include="Scripts/bootstrap.min.js">
       <publishTime>07/04/2013 09:36:02</publishTime>
+    </File>
+    <File Include="Scripts/db.js">
+      <publishTime>09/06/2013 09:28:10</publishTime>
     </File>
     <File Include="Scripts/jquery-1.9.1.js">
       <publishTime>07/04/2013 09:36:02</publishTime>
@@ -372,16 +387,16 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/08/2013 13:40:27</publishTime>
     </File>
     <File Include="Views/Home/apis.cshtml">
-      <publishTime>08/21/2013 14:46:27</publishTime>
+      <publishTime>09/06/2013 09:27:43</publishTime>
     </File>
     <File Include="Views/Home/ConnList.cshtml">
-      <publishTime>08/22/2013 15:58:43</publishTime>
+      <publishTime>09/06/2013 08:56:34</publishTime>
     </File>
     <File Include="Views/Home/contact.cshtml">
       <publishTime>07/31/2013 10:41:27</publishTime>
     </File>
     <File Include="Views/Home/Database.cshtml">
-      <publishTime>08/22/2013 16:02:25</publishTime>
+      <publishTime>09/06/2013 09:47:24</publishTime>
     </File>
     <File Include="Views/Home/Guest.cshtml">
       <publishTime>07/10/2013 08:38:39</publishTime>
@@ -391,6 +406,9 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     </File>
     <File Include="Views/Home/RsvpForm.cshtml">
       <publishTime>07/10/2013 09:32:30</publishTime>
+    </File>
+    <File Include="Views/Home/Setup.cshtml">
+      <publishTime>09/06/2013 09:35:39</publishTime>
     </File>
     <File Include="Views/Home/Thanks.cshtml">
       <publishTime>07/10/2013 09:20:19</publishTime>
@@ -405,7 +423,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/30/2013 09:30:51</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>08/22/2013 15:36:32</publishTime>
+      <publishTime>09/03/2013 09:59:25</publishTime>
     </File>
     <File Include="Views/Shared/_PageStart.cshtml">
       <publishTime>07/04/2013 16:57:10</publishTime>
@@ -432,7 +450,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>07/08/2013 10:10:23</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/29/2013 09:42:26</publishTime>
+      <publishTime>09/06/2013 09:58:17</publishTime>
     </File>
   </ItemGroup>
 </Project>

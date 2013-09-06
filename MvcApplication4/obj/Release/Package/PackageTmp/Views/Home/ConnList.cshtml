@@ -3,5 +3,8 @@
 }
 
 @foreach (ExpenseReportServer.Models.Connection cnn in ViewBag.cnnList){
-    <li><a href="/Home/Database/@cnn.id" >@cnn.Name</a></li>            
+    <li>
+       @* <a href="/Home/Database/@cnn.id" >@cnn.Name</a>*@
+        @Html.ActionLink(@cnn.Name, "Database", new { id = @cnn.id });
+    </li>            
 }
