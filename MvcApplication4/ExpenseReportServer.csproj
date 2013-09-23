@@ -135,6 +135,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Config\AppSettings.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DbController.cs" />
     <Compile Include="Controllers\ERController.cs" />
@@ -180,6 +181,7 @@
     <Compile Include="Models\Display.cs" />
     <Compile Include="Models\LocalDatabase.cs" />
     <Compile Include="Models\Push.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\UserDevices.cs" />
     <Compile Include="Models\LoginUsers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -320,6 +322,7 @@
     <Content Include="Views\UserLearn\Edit.cshtml" />
     <Content Include="Views\UserLearn\Delete.cshtml" />
     <Content Include="Views\Home\Setup.cshtml" />
+    <Content Include="Views\Home\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\upload\" />

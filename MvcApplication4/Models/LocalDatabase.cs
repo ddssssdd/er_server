@@ -16,6 +16,7 @@ namespace ExpenseReportServer.Models
         public DbSet<Connection> Connections { get; set; }
         public DbSet<Section> Sections { get; set; }
         public DbSet<CellData> CellDatas { get; set; }
+        public DbSet<Settings> Settings { get; set; }
     }
     [Table("Connection")]
     public class Connection

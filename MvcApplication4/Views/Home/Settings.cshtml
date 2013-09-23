@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Settings";
+    Layout = "~/Views/Home/_menu.cshtml";
+}
+
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3">
+            
+        </div>
+        <div class="span9">
+            <form class="form-horizontal" action="Settings" method="post">
+                @foreach(var s in @ViewBag.items){
+            <div class="control-group">
+                <label class="control-label" for="@s.Key">@s.Key</label>
+                <div class="controls">
+                    <input type="text" class="input-xxlarge" name="@s.Key" placeholder="@s.Key" value="@s.Value">
+                </div>
+            </div>
+                }
+            
+            
+            <div class="control-group">
+                <div class="controls">
+                    
+                    <button type="submit" class="btn">Save</button>
+                </div>
+            </div>
+        </form>
+        </div>
+        
+    </div>
+    
+</div>

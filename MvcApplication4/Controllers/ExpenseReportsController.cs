@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.IO;
 using ExpenseReportServer.Expense;
 using ExpenseReportServer.Models;
+using ExpenseReportServer.Config;
 namespace ExpenseReportServer.Controllers
 {
     public class ExpenseReportsController : ApiController
@@ -77,7 +78,8 @@ namespace ExpenseReportServer.Controllers
             var list = db.ExpenseReportReceipts.Where((detail) => detail.ExpenseReportID == reportId && (detailId == 0 ? 1 == 1 : detail.ExpenseReportDetailID == detailId)).ToList();
             list.ForEach(item => {
                 //item.FileName = !String.IsNullOrEmpty(item.FileName) ? rootUrl +upload_folder+ item.FileName : item.FileName;
-                item.FileName = !String.IsNullOrEmpty(item.FileName) ? reference_url + item.FileName : "";
+                //item.FileName = !String.IsNullOrEmpty(item.FileName) ? reference_url + item.FileName : "";
+                item.FileName = !String.IsNullOrEmpty(item.FileName) ? AppSettings.Image_Reference_Url_Base + item.FileName : "";
             });
             return new ReturnStatus { status = true, result =list };
         }
@@ -373,7 +375,8 @@ namespace ExpenseReportServer.Controllers
             }
 
             //string root = System.Web.HttpContext.Current.Server.MapPath("~"+upload_folder);
-            string root = upload_to_folder;
+            //string root = upload_to_folder;
+            string root = AppSettings.Upload_To_Folder;
             var provider = new CustomMultipartFormDataStreamProvider(root);
 
             try

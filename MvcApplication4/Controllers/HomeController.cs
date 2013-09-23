@@ -10,6 +10,7 @@ using System.Threading;
 using System.Data;
 using ExpenseReportServer.Expense;
 using ExpenseReportServer.Helpers;
+using ExpenseReportServer.Config;
 
 namespace ExpenseReportServer.Controllers
 {
@@ -68,6 +69,39 @@ namespace ExpenseReportServer.Controllers
             ViewBag.cnnId = id;
             ViewBag.tablename = name;
             ViewBag.fields = fields;
+            return View();
+        }
+        public ActionResult Settings()
+        {
+            var settings = localDb.Settings.ToList();
+            ViewBag.items = settings;            
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Settings(FormCollection list) {
+            var settings = localDb.Settings.ToList();
+            for(int i=0;i<list.Count;i++)
+            {
+                String key = list.Keys[i];
+                String value = list[i];
+                var item = settings.Find(s => s.Key == key);
+                if (item != null)
+                {
+                    item.Value = value;
+                }
+                else
+                {
+                    item = new Settings();
+                    item.Key = key;
+                    item.Value = value;
+                    localDb.Settings.Add(item);
+                }
+                
+            }
+            localDb.SaveChanges();
+            AppSettings.init();
+            ViewBag.items = localDb.Settings.ToList();
+            
             return View();
         }
     }

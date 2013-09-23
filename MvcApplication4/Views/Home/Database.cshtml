@@ -94,6 +94,11 @@
                     </table>
                     <div class="well">
                         <div class="hero unit">
+                            <div class="btn-group">
+                                <button class="btn" onclick="classDefine_c();">C#</button>
+                                <button class="btn" onclick="classDefine_java();">Java</button>
+                                <button class="btn" onclick="classDefine_objectivec();">Objective-C</button>
+                            </div>
                             <code>
                                 <p id="class_define"></p>
                             </code>
@@ -124,6 +129,8 @@
     var index = -1;
     var pageCount =-1;
     var current_object =null;
+    var current_fields=null;
+    var current_tablename=null;
     function searchByType(type)
     {
         
@@ -325,34 +332,24 @@
     }
 
     function getTable(tablename,divTable,divClass,id) {
-   
+        current_tablename = tablename;
         var url ='@(Url.HttpRouteUrl("DefaultApi",new { controller="Db",action="columns"}))';
         $.getJSON(url, "tablename=" + tablename+"&id="+id, function (json, a2, a3) {
             if (a2 == "success") {
             
-                $(divTable).empty();
-                var class_define = "[Table(\"" + tablename + "\")]<br/>";
-                class_define += "public class " + tablename + "<br/>";
-                class_define += "{<br/>";
-
+                $(divTable).empty();                
+                current_fields = json;
                 for (var i = 0; i < json.length; i++) {
                     var item = json[i];
                     var tr = "<tr><td>" + i + "</td><td>" + item.Name + "</td><td>" + item.Type + "</td><td>" + item.Length + "</td></tr>";
                     $(tr).appendTo(divTable);
-                    if (item.Name.indexOf(" ") < 0) {
-                        class_define += "   public " + getType(item.Type) + " " + item.Name + " {get;set;}<br/>";
-                    } else {
-                        class_define += "   [Column(\"" + item.Name + "\")]<br/>";
-                        class_define += "   public " + getType(item.Type) + " " + item.Name.replace(/ /g,"_") + " {get;set;}<br/>";
-                    }
                 }
-                class_define += "}<br/>";
-                $(divClass).html(class_define);
+                classDefine_c();
             }
 
         });
     }
-    function getType(type) {
+    function getType_c(type) {
         if (type == null) {
             return "Unknown";
         }
@@ -377,7 +374,131 @@
         return dict[type.toLowerCase()];
 
     }
+    function classDefine_c()
+    {
+        var class_define = "[Table(\"" + current_tablename + "\")]<br/>";
+        class_define += "public class " + current_tablename + "<br/>";
+        class_define += "{<br/>";
+        
+        for (var i = 0; i < current_fields.length; i++) {
+            var item = current_fields[i];
+            
+            if (item.Name.indexOf(" ") < 0) {
+                class_define += "   public " + getType_c(item.Type) + " " + item.Name + " {get;set;}<br/>";
+            } else {
+                class_define += "   [Column(\"" + item.Name + "\")]<br/>";
+                class_define += "   public " + getType_c(item.Type) + " " + item.Name.replace(/ /g,"_") + " {get;set;}<br/>";
+            }
+        }
+        class_define += "}<br/>";
+        $("#class_define").html(class_define);
+    }
 
+    function classDefine_objectivec()
+    {}
+    function classDefine_java()
+    {
+        var class_define = "import java.io.Serializable;<br/>";
+        class_define += "import org.json.JSONObject;<br/>";
+        class_define += "import android.util.Log;<br/>";
+        class_define +="<br/>";
+        class_define += "public class " + current_tablename + " implements Serializable<br/>";
+        class_define += "{<br/>";
+        
+        for (var i = 0; i < current_fields.length; i++) {
+            var item = current_fields[i];
+            
+            if (item.Name.indexOf(" ") < 0) {
+                class_define += "   public " + getType_java(item.Type) + " " + item.Name + ";<br/>";
+            } else {                
+                class_define += "   public " + getType_java(item.Type) + " " + item.Name.replace(/ /g,"_") + ";<br/>";
+            }
+        }
+        //constructor
+        class_define +="public "+current_tablename+"()<br/>";
+        class_define +="{<br/>";
+        class_define +="}<br/>";
+        //json constructor
+        class_define +="public "+current_tablename+"(JSONObject result)<br/>";
+        class_define +="{<br/>";
+        class_define +="    processJSON(result);<br/>";
+        class_define +="}<br/>";
+        //function processJSON
+        class_define +="private void processJSON(final JSONObject result)<br/>";
+        class_define +="{<br/>";
+        class_define +="    try<br/>";
+        class_define +="    {<br/>";
+        for(var i=0;i<current_fields.length;i++)
+        {
+            var item = current_fields[i];
+            class_define +="        if (result.has(\""+item.Name+"\") && !result.isNull(\""+item.Name+"\")){<br/>";
+            class_define +="            "+item.Name+" = result."+getFunction_java(item.Type)+"(\""+item.Name+"\");<br/>";
+            class_define +="        }<br/>";
+        }
+        class_define +="    }catch(Exception e)<br/>";
+        class_define +="    {<br/>";
+        class_define +="        Log.e(\"Class "+current_tablename+"\",e.getMessage());<br/>";
+        class_define +="    }<br/>";
+        class_define +="}<br/>";
+
+
+
+
+
+
+        class_define += "}<br/>";
+        $("#class_define").html(class_define);
+    }
+    function getType_java(type) {
+        if (type == null) {
+            return "Unknown";
+        }
+        var dict = {
+            "bit": "boolean",
+            "smallint": "short",
+            "tinyint": "byte",
+            "int": "int",
+            "numeric": "double",
+            "decimal": "double",
+            "float": "float",
+            "real": "double",
+            "money":"double",
+            "datetime": "String",
+            "nvarchar": "String",
+            "uniqueidentifier": "String",
+            "varchar": "String",
+            "char": "String",
+            "text": "String",
+            "nchar": "String",
+        };
+        return dict[type.toLowerCase()];
+
+    }
+    function getFunction_java(type) {
+        if (type == null) {
+            return "Unknown";
+        }
+        var dict = {
+            "bit": "getBoolean",
+            "smallint": "getInt",
+            "tinyint": "getInt",
+            "int": "getInt",
+            "numeric": "getDouble",
+            "decimal": "getDouble",
+            "float": "getDouble",
+            "real": "getDouble",
+            "money":"getDouble",
+            "datetime": "getString",
+            "nvarchar": "getString",
+            "uniqueidentifier": "getString",
+            "varchar": "getString",
+            "char": "getString",
+            "text": "getString",
+            "nchar": "getString",
+        };
+        return dict[type.toLowerCase()];
+
+    }
     getSummary();
     $("#result").hide();
     $("#table_control").hide();

@@ -26,6 +26,9 @@ namespace ExpenseReportServer
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+
+
+            ExpenseReportServer.Config.AppSettings.init();
         }
     }
 }
