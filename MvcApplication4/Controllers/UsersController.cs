@@ -8,13 +8,15 @@ using ExpenseReportServer.Expense;
 using ExpenseReportServer.Models;
 using System.Data;
 using System.Net.Mail;
+using ExpenseReportServer.Config;
+using System.Collections;
 
 namespace ExpenseReportServer.Controllers
 {
-    public class UsersController : ApiController
+    public class UsersController : DbApiController
     {
         private LocalDatabase localDb = new LocalDatabase();
-        private ExpenseDB db = new ExpenseDB();
+        
         [HttpGet]
         public ReturnStatus login(String username, String password)
         {
@@ -83,6 +85,15 @@ namespace ExpenseReportServer.Controllers
             }
             
 
+        }
+        [HttpGet]
+        public ReturnStatus clients()
+        {
+            var list = new ArrayList();
+            AppSettings.clients().ForEach(cc => {
+                list.Add(new { id = cc.ID, name = cc.ClientName });
+            });
+            return new ReturnStatus { status = true, result = list };
         }
         
         [HttpGet]

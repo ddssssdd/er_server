@@ -7,11 +7,12 @@ using System.Net.Http;
 using System.Web.Http;
 using ExpenseReportServer.Models;
 using ExpenseReportServer.Expense.Service;
+using ExpenseReportServer.Config;
 namespace ExpenseReportServer.Controllers
 {
-    public class ServiceController : ApiController
+    public class ServiceController : DbApiController
     {
-        private ExpenseDB db = new ExpenseDB();
+        
         [HttpGet]
         public ReturnStatus appraisal(int id)
         {

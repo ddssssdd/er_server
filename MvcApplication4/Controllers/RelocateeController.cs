@@ -7,12 +7,13 @@ using System.Web.Http;
 using ExpenseReportServer.Expense;
 using ExpenseReportServer.Models;
 using System.Collections;
+using ExpenseReportServer.Config;
 
 namespace ExpenseReportServer.Controllers
 {
-    public class RelocateeController : ApiController
+    public class RelocateeController : DbApiController
     {
-        private ExpenseDB db = new ExpenseDB();
+        
         [HttpGet]
         public ReturnStatus index(int id)
         {

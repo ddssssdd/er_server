@@ -12,6 +12,8 @@ namespace ExpenseReportServer.Expense
 {
     public class ExpenseDB : DbContext
     {
+        public ExpenseDB(String connectionString) : base(connectionString) { }
+        
         public DbSet<Users> Users { get; set; }
         public DbSet<Person> Persons { get; set; }
         public DbSet<Relocatee> Relocatees { get; set; }

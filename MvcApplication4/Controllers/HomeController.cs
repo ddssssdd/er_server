@@ -18,7 +18,7 @@ namespace ExpenseReportServer.Controllers
     public class HomeController : Controller
     {
         private LocalDatabase localDb = new LocalDatabase();
-        private ExpenseDB db = new ExpenseDB();
+        
         public ActionResult Index()
         {
             

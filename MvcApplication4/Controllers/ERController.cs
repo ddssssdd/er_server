@@ -6,12 +6,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ExpenseReportServer.Expense;
+using ExpenseReportServer.Config;
 
 namespace ExpenseReportServer.Controllers
 {
     public class ERController : Controller
     {
-        private ExpenseDB db = new ExpenseDB();
+        private ExpenseDB db = new ExpenseDB(AppSettings.ConnectionString(0));
 
         //
         // GET: /ER/
