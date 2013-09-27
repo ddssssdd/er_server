@@ -80,8 +80,8 @@
                 <div class="row-fluid" id="schema">
                     <table class="table  table-striped table-bordered">
                         <thead>
-                            <tr style="background-color: ActiveCaption">
-
+                            <tr style="background-color: ActiveCaption" onclick="row_select('check_all');">
+                                <td> <input id="check_all" type="checkbox" checked="checked" onclick="checkClick(this);"/></td>
                                 <td>No</td>
                                 <td>Name</td>
                                 <td>Type</td>
@@ -131,6 +131,17 @@
     var current_object =null;
     var current_fields=null;
     var current_tablename=null;
+
+    function checkClick(chk){
+        
+        $("input[type='checkbox']").not("#check_all").click();
+    }
+    function row_select(chb){
+        
+        $("#"+chb).click();
+        
+        
+    }
     function searchByType(type)
     {
         
@@ -341,7 +352,7 @@
                 current_fields = json;
                 for (var i = 0; i < json.length; i++) {
                     var item = json[i];
-                    var tr = "<tr><td>" + i + "</td><td>" + item.Name + "</td><td>" + item.Type + "</td><td>" + item.Length + "</td></tr>";
+                    var tr = "<tr onclick='row_select(\"chb_"+item.Name+"\")'><td><input type='checkbox' checked='checked' id='chb_"+item.Name+"'/></td><td>" + i + "</td><td>" + item.Name + "</td><td>" + item.Type + "</td><td>" + item.Length + "</td></tr>";
                     $(tr).appendTo(divTable);
                 }
                 classDefine_c();
@@ -395,7 +406,121 @@
     }
 
     function classDefine_objectivec()
-    {}
+    {
+        function getDefault(type)
+        {
+            if (type == null) {
+                return "Unknown";
+            }
+            var dict = {
+                "bit": "NO",
+                "smallint": "0",
+                "tinyint": "0",
+                "int": "0",
+                "numeric": "0.0",
+                "decimal": "0.0",
+                "float": "0.0",
+                "real": "0.0",
+                "money":"0.0",
+                "datetime": "@@\"\"",
+                "nvarchar": "@@\"\"",
+                "uniqueidentifier": "@@\"\"",
+                "varchar": "@@\"\"",
+                "char": "@@\"\"",
+                "text": "@@\"\"",
+                "nchar": "@@\"\"",
+            };
+            return dict[type.toLowerCase()];
+        
+        }
+                
+        function getConvertFunction(type,fieldname){
+            if (type == null) {
+                return "Unknown";
+            }
+            var dict = {
+                "bit": "[json(@@\""+fieldname+"\") boolValue]",
+                "smallint": "[json(@@\""+fieldname+"\") intValue]",
+                "tinyint": "[json(@@\""+fieldname+"\") intValue]",
+                "int": "[json(@@\""+fieldname+"\") intValue]",
+                "numeric": "[json(@@\""+fieldname+"\") floatValue]",
+                "decimal": "[json(@@\""+fieldname+"\") floatValue]",
+                "float": "[json(@@\""+fieldname+"\") floatValue]",
+                "real": "[json(@@\""+fieldname+"\") floatValue]",
+                "money":"[json(@@\""+fieldname+"\") floatValue]",
+                "datetime": "[[AppSettings sharedSettings] getDateString: json[@@\""+fieldname+"\"]]",
+                "nvarchar": "[[AppSettings sharedSettings] getString: json[@@\""+fieldname+"\"]]",
+                "uniqueidentifier": "[[AppSettings sharedSettings] getString: json[@@\""+fieldname+"\"]]",
+                "varchar": "[[AppSettings sharedSettings] getString: json[@@\""+fieldname+"\"]]",
+                "char": "[[AppSettings sharedSettings] getString: json[@@\""+fieldname+"\"]]",
+                "text": "[[AppSettings sharedSettings] getString: json[@@\""+fieldname+"\"]]",
+                "nchar": "[[AppSettings sharedSettings] getString: json[@@\""+fieldname+"\"]]",
+            };
+            return dict[type.toLowerCase()];
+        }
+        var class_define ="@@interface "+current_tablename+" : NSObject<br/><br/>";
+        var function_init="";
+        var function_init2="";
+        
+        for (var i = 0; i < current_fields.length; i++) {
+
+            
+            var item = current_fields[i];
+            var chb = $("#chb_"+item.Name);
+            if (chb.prop("checked")==true){
+                var fieldname=item.Name;
+                if (item.Name.indexOf(" ")  >-1) {
+                    fieldname =item.Name.replace(/ /g,"_");
+                } 
+                class_define += "@@property (nonatomic) " + getType_objc(item.Type) + " " + fieldname + ";<br/>";
+                function_init +="self."+fieldname+" = "+getDefault(item.Type)+";<br/>";
+                function_init2 += "self."+fieldname +" = "+getConvertFunction(item.Type,item.Name)+";<br/>";
+            }
+        }
+        class_define +="<br/>-(id)initWithJSON:(id)json;<br/>";
+        class_define +="<hr>/*                                implement                                         */<br/>";
+        var class_imp = "@@implementation "+current_tablename+" <br/>";
+        class_imp +="-(id)init{ <br/>";
+        class_imp +="   self = [super init];<br/>";
+        class_imp +="   if (self){<br/>";
+        class_imp += function_init;
+        class_imp += "}<br/>";
+        class_imp +="return self;<br/>";
+        class_imp +="}<br/>";
+        var class_imp2 = "-(id)initWithJSON:(id)json{<br/>";
+        class_imp2 +="   self = [super init];<br/>";
+        class_imp2 +="   if (self){<br/>";
+        class_imp2 += function_init2;
+        class_imp2 += "}<br/>";
+        class_imp2 +="return self;<br/>";
+        class_imp2 +="}<br/>";
+        $("#class_define").html(class_define+class_imp+"<br/>"+class_imp2);
+    }
+    function getType_objc(type) {
+        if (type == null) {
+            return "Unknown";
+        }
+        var dict = {
+            "bit": "boolean",
+            "smallint": "short",
+            "tinyint": "byte",
+            "int": "int",
+            "numeric": "double",
+            "decimal": "double",
+            "float": "float",
+            "real": "double",
+            "money":"double",
+            "datetime": "NSString *",
+            "nvarchar": "NSString *",
+            "uniqueidentifier": "NSString *",
+            "varchar": "NSString *",
+            "char": "NSString *",
+            "text": "NSString *",
+            "nchar": "NSString *",
+        };
+        return dict[type.toLowerCase()];
+
+    }
     function classDefine_java()
     {
         var class_define = "import java.io.Serializable;<br/>";
@@ -406,12 +531,16 @@
         class_define += "{<br/>";
         
         for (var i = 0; i < current_fields.length; i++) {
-            var item = current_fields[i];
+
             
-            if (item.Name.indexOf(" ") < 0) {
-                class_define += "   public " + getType_java(item.Type) + " " + item.Name + ";<br/>";
-            } else {                
-                class_define += "   public " + getType_java(item.Type) + " " + item.Name.replace(/ /g,"_") + ";<br/>";
+            var item = current_fields[i];
+            var chb = $("#chb_"+item.Name);
+            if (chb.prop("checked")==true){
+                if (item.Name.indexOf(" ") < 0) {
+                    class_define += "   public " + getType_java(item.Type) + " " + item.Name + ";<br/>";
+                } else {                
+                    class_define += "   public " + getType_java(item.Type) + " " + item.Name.replace(/ /g,"_") + ";<br/>";
+                }
             }
         }
         //constructor
@@ -431,9 +560,12 @@
         for(var i=0;i<current_fields.length;i++)
         {
             var item = current_fields[i];
-            class_define +="        if (result.has(\""+item.Name+"\") && !result.isNull(\""+item.Name+"\")){<br/>";
-            class_define +="            "+item.Name+" = result."+getFunction_java(item.Type)+"(\""+item.Name+"\");<br/>";
-            class_define +="        }<br/>";
+            var chb = $("#chb_"+item.Name);
+            if (chb.prop("checked")==true){
+                class_define +="        if (result.has(\""+item.Name+"\") && !result.isNull(\""+item.Name+"\")){<br/>";
+                class_define +="            "+item.Name+" = result."+getFunction_java(item.Type)+"(\""+item.Name+"\");<br/>";
+                class_define +="        }<br/>";
+            }
         }
         class_define +="    }catch(Exception e)<br/>";
         class_define +="    {<br/>";

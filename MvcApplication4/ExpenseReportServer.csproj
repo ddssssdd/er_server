@@ -145,6 +145,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RelocateeController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\UserLearnController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Expense\Address.cs" />
@@ -325,6 +326,8 @@
     <Content Include="Views\UserLearn\Delete.cshtml" />
     <Content Include="Views\Home\Setup.cshtml" />
     <Content Include="Views\Home\Settings.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Test\Test1.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\upload\" />
