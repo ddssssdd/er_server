@@ -15,10 +15,7 @@ namespace ExpenseReportServer.Controllers
     public class DbController : ApiController
     {
         private LocalDatabase db = new LocalDatabase();
-        //private ExpenseDB db = new ExpenseDB();
         
-        
-
         [HttpGet]
         public List<FieldDefine> columns(String tablename,int id=0)
         {
